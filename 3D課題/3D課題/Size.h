@@ -1,6 +1,6 @@
 #pragma once
 
-class Size
+struct Size
 {
 public:
 	Size()
@@ -74,7 +74,6 @@ public:
 		return *this;
 	}
 
-private:
 	float Width;
 	float Height;
 };
