@@ -100,6 +100,16 @@ void Transform(void)
 	//射影座標変換用の行列算出 end
 }
 
+VERTEX v[4];
+
+void HandMadeTranslation(D3DMATRIX* matrix_, float x_, float y_, float z_) {
+
+	matrix_->_41 += x_;
+	matrix_->_42 += y_;
+	matrix_->_43 += z_;
+
+}
+
 void Draw()
 {
 	g_pD3DDevice->Clear(0L,
@@ -116,7 +126,6 @@ void Draw()
 
 	// 三角形を描画
 	// ポリゴンのローカル座標の位置を指定 start
-	VERTEX v[4];
 	v[0].color = D3DCOLOR_ARGB(255, 255, 255, 255);
 	v[1].color = D3DCOLOR_ARGB(255, 255, 255, 255);
 	v[2].color = D3DCOLOR_ARGB(255, 255, 255, 255);
@@ -133,11 +142,11 @@ void Draw()
 	D3DXMatrixIdentity(&mat_scale);
 
 	// 移動
-	D3DXMatrixTranslation(&mat_trans, 0.0f, 0.0f, 10.0f);
-
-	
-
-
+#if 1
+	D3DXMatrixTranslation(&mat_trans, 0.0f, 10.0f, 10.0f);
+#else 
+	HandMadeTranslation(&mat_trans, 10.0f, 0.0f, 10.0f);
+#endif
 	// 回転
 	D3DXMatrixRotationX(&mat_rotx, D3DXToRadian(0.0f));
 	D3DXMatrixRotationY(&mat_roty, D3DXToRadian(0.0f));
