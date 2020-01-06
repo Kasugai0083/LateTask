@@ -2,6 +2,8 @@
 
 #include <Windows.h>
 #include <d3d9.h>
+#include <unordered_map>
+#include <string>
 
 class Size;
 class Vec3;
@@ -32,10 +34,12 @@ struct Texture
 	float Width, Height;
 };
 
-class TextureFactory
+class GraphicsFactory
 {
 public:
-
+	GraphicsFactory() {
+		m_FullScreen = true;
+	}
 
 	bool InitGraphics(bool is_fullscreen_);
 
@@ -51,10 +55,12 @@ public:
 
 	bool CreateTexture(const char* file_name_, Texture* texture_data_);
 
+	bool HasFullScreen() { return m_FullScreen; };
+
 private:
 
 	bool CreateGraphicsInterface();
-	bool CreateGraphicsDevice(D3DPRESENT_PARAMETERS* present_param_, bool isFullScreen_);
+	bool CreateGraphicsDevice(D3DPRESENT_PARAMETERS* present_param_);
 	bool SetUpViewPort(D3DPRESENT_PARAMETERS* present_param);
 	bool CreateFontDevice();
 
@@ -64,6 +70,10 @@ private:
 	LPDIRECT3DDEVICE9 m_D3DDevice;
 	LPD3DXFONT m_FontList[static_cast<int>(FontSize::FontSizeMax)];
 
+	std::unordered_map<std::string, Texture> m_TexList;
+
+	bool m_FullScreen;
+
 };
 
-TextureFactory* TexFactory();
+GraphicsFactory* GrapFactory();
