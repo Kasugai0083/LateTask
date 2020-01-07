@@ -110,6 +110,49 @@ void HandMadeTranslation(D3DMATRIX* matrix_, float x_, float y_, float z_) {
 
 }
 
+void HandMadeScaling(D3DMATRIX* matrix_, float x_, float y_, float z_) {
+
+	matrix_->_11 = x_;
+	matrix_->_22 = y_;
+	matrix_->_33 = z_;
+	
+}
+
+void HandMadeRotationX(D3DXMATRIX* matrix_, float radian_) {
+	D3DXMatrixIdentity(matrix_);
+
+	matrix_->_22 = cos(radian_);
+	matrix_->_23 = sin(radian_);
+	matrix_->_32 = -sin(radian_);
+	matrix_->_33 = cos(radian_);
+
+}
+
+void HandMadeRotationY(D3DXMATRIX* matrix_, float radian_) {
+	D3DXMatrixIdentity(matrix_);
+
+	matrix_->_11 = cos(radian_);
+	matrix_->_13 = -sin(radian_);
+	matrix_->_31 = sin(radian_);
+	matrix_->_33 = cos(radian_);
+
+}
+void HandMadeRotationZ(D3DXMATRIX* matrix_, float radian_) {
+	D3DXMatrixIdentity(matrix_);
+
+	matrix_->_11 = cos(radian_);
+	matrix_->_12 = sin(radian_);
+	matrix_->_21 = -sin(radian_);
+	matrix_->_22 = cos(radian_);
+
+}
+
+void HandMadeMultiply(D3DXMATRIX* matrix_, D3DXMATRIX* matrix2_, D3DXMATRIX* matrix3_) {
+
+	*matrix_ = (*matrix2_) * (*matrix3_);
+
+}
+
 void Draw()
 {
 	g_pD3DDevice->Clear(0L,
@@ -142,28 +185,46 @@ void Draw()
 	D3DXMatrixIdentity(&mat_scale);
 
 	// à⁄ìÆ
-#if 1
+#if 0
 	D3DXMatrixTranslation(&mat_trans, 0.0f, 10.0f, 10.0f);
 #else 
-	HandMadeTranslation(&mat_trans, 10.0f, 0.0f, 10.0f);
+	HandMadeTranslation(&mat_trans, 0.0f, 0.0f, 10.0f);
 #endif
 	// âÒì]
-	D3DXMatrixRotationX(&mat_rotx, D3DXToRadian(0.0f));
-	D3DXMatrixRotationY(&mat_roty, D3DXToRadian(0.0f));
-	D3DXMatrixRotationZ(&mat_rotz, D3DXToRadian(0.0f));
+
+	static float test = 1.f;
+
+	test++;
+
+	//D3DXMatrixRotationX(&mat_rotx, D3DXToRadian(test));
+
+	HandMadeRotationX(&mat_rotx, D3DXToRadian(test));
+
+	//D3DXMatrixRotationY(&mat_roty, D3DXToRadian(test));
+	HandMadeRotationY(&mat_roty, D3DXToRadian(0.f));
+
+	//D3DXMatrixRotationZ(&mat_rotz, D3DXToRadian(test));
+	HandMadeRotationZ(&mat_rotz, D3DXToRadian(0.f));
 
 	/**
 	* ëÊàÍà¯êî => åãâ ÇéÛÇØéÊÇÈ
 	* ëÊìÒà¯êî => ä|ÇØçáÇÌÇπÇÈíl
 	* ëÊéOà¯êî => ä|ÇØçáÇÌÇπÇÈíl
 	*/
-	D3DXMatrixMultiply(&mat_rot, &mat_rot, &mat_roty);
-	D3DXMatrixMultiply(&mat_rot, &mat_rot, &mat_rotx);
-	D3DXMatrixMultiply(&mat_rot, &mat_rot, &mat_rotz);
+	//D3DXMatrixMultiply(&mat_rot, &mat_rot, &mat_roty);
+	//D3DXMatrixMultiply(&mat_rot, &mat_rot, &mat_rotx);
+	//D3DXMatrixMultiply(&mat_rot, &mat_rot, &mat_rotz);
+
+	HandMadeMultiply(&mat_rot, &mat_rot, &mat_roty);
+	HandMadeMultiply(&mat_rot, &mat_rot, &mat_rotx);
+	HandMadeMultiply(&mat_rot, &mat_rot, &mat_rotz);
 
 	// ägëÂ
+#if 0
 	D3DXMatrixScaling(&mat_scale, 1.0f, 1.0f, 1.0f);
-
+#else
+	HandMadeScaling(&mat_scale, 2.f, 2.f, 1.f);
+#endif
 	// ä|ÇØçáÇÌÇπ(ägèk * âÒì] * à⁄ìÆ)
 	mat_world *= mat_scale * mat_rot * mat_trans;
 
