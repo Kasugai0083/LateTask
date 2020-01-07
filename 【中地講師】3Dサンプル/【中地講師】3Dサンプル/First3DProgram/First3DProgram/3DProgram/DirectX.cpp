@@ -68,14 +68,34 @@ bool InitDirectX(HWND window_handle)
 	return true;
 }
 
-void Transform(void)
+D3DXMATRIX matProj, matView;
+
+void Transform()
 {
-	D3DXMATRIX matProj, matView;
+
+	static float test = 1.f;
+
+	static const D3DXVECTOR3 TargetPos(0.f,0.f,0.f);
+
+	test++;
+
+	float rad = test * 3.14f / 180.f;
+	float distance = 50.0f;
+	D3DXVECTOR3 vec = D3DXVECTOR3(
+		sinf(rad) * distance,
+		0.0f,
+		-cosf(rad) * distance
+	);
+
+
 
 	//ビュー座標変換用の行列算出 start
-	D3DXVECTOR3 camera_pos(0.0f, 0.0f, -10.0f); // カメラ位置
+	D3DXVECTOR3 camera_pos(0.f, 0.f, 0.f); // カメラ位置
 	D3DXVECTOR3 eye_pos(0.0f, 0.0f, 0.0f);		// 注視点
 	D3DXVECTOR3 up_vector(0.0f, 1.0f, 0.0f);	// カメラの向き
+
+	camera_pos.z += vec.z;
+	camera_pos.x += vec.x;
 
 	D3DXMatrixIdentity(&matView);
 	D3DXMatrixLookAtLH(&matView, 
@@ -102,15 +122,25 @@ void Transform(void)
 
 VERTEX v[4];
 
-void HandMadeTranslation(D3DMATRIX* matrix_, float x_, float y_, float z_) {
+void HandMadeTranslation(D3DXMATRIX* matrix_, float x_, float y_, float z_) {
+	D3DXMatrixIdentity(matrix_);
 
 	matrix_->_41 += x_;
 	matrix_->_42 += y_;
 	matrix_->_43 += z_;
 
 }
+void HandMadeBillBoard(D3DXMATRIX* matrix_) {
+	D3DXMatrixIdentity(matrix_);
 
-void HandMadeScaling(D3DMATRIX* matrix_, float x_, float y_, float z_) {
+	matrix_->_41 = 0.f;
+	matrix_->_42 = 0.f;
+	matrix_->_43 = 0.f;
+
+}
+
+void HandMadeScaling(D3DXMATRIX* matrix_, float x_, float y_, float z_) {
+	D3DXMatrixIdentity(matrix_);
 
 	matrix_->_11 = x_;
 	matrix_->_22 = y_;
@@ -121,29 +151,29 @@ void HandMadeScaling(D3DMATRIX* matrix_, float x_, float y_, float z_) {
 void HandMadeRotationX(D3DXMATRIX* matrix_, float radian_) {
 	D3DXMatrixIdentity(matrix_);
 
-	matrix_->_22 = cos(radian_);
-	matrix_->_23 = sin(radian_);
-	matrix_->_32 = -sin(radian_);
-	matrix_->_33 = cos(radian_);
+	matrix_->_22 = cosf(radian_);
+	matrix_->_23 = sinf(radian_);
+	matrix_->_32 = -sinf(radian_);
+	matrix_->_33 = cosf(radian_);
 
 }
 
 void HandMadeRotationY(D3DXMATRIX* matrix_, float radian_) {
 	D3DXMatrixIdentity(matrix_);
 
-	matrix_->_11 = cos(radian_);
-	matrix_->_13 = -sin(radian_);
-	matrix_->_31 = sin(radian_);
-	matrix_->_33 = cos(radian_);
+	matrix_->_11 = cosf(radian_);
+	matrix_->_13 = -sinf(radian_);
+	matrix_->_31 = sinf(radian_);
+	matrix_->_33 = cosf(radian_);
 
 }
 void HandMadeRotationZ(D3DXMATRIX* matrix_, float radian_) {
 	D3DXMatrixIdentity(matrix_);
 
-	matrix_->_11 = cos(radian_);
-	matrix_->_12 = sin(radian_);
-	matrix_->_21 = -sin(radian_);
-	matrix_->_22 = cos(radian_);
+	matrix_->_11 = cosf(radian_);
+	matrix_->_12 = sinf(radian_);
+	matrix_->_21 = -sinf(radian_);
+	matrix_->_22 = cosf(radian_);
 
 }
 
@@ -152,6 +182,73 @@ void HandMadeMultiply(D3DXMATRIX* matrix_, D3DXMATRIX* matrix2_, D3DXMATRIX* mat
 	*matrix_ = (*matrix2_) * (*matrix3_);
 
 }
+
+void InverseViewMatrix(D3DXMATRIX* out)
+{
+	D3DXMatrixInverse(out, NULL, &matView);
+}
+
+void DrawBillBoard() 
+{
+	g_pD3DDevice->Clear(0L,
+		NULL,
+		D3DCLEAR_TARGET,
+		D3DCOLOR_ARGB(255, 0, 0, 0),
+		1.0f,	// Zバッファの初期値
+		0);		// ステンシルバッファの初期値
+
+	g_pD3DDevice->BeginScene();
+
+	//ライティングを無効にする。
+	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	// 三角形を描画
+	// ポリゴンのローカル座標の位置を指定 start
+	v[0].color = D3DCOLOR_ARGB(255, 255, 255, 255);
+	v[1].color = D3DCOLOR_ARGB(255, 255, 255, 255);
+	v[2].color = D3DCOLOR_ARGB(255, 255, 255, 255);
+	v[0].pos.x = 0.0f; v[0].pos.y = 3.5f; v[0].pos.z = 0.0f;
+	v[1].pos.x = 6.0f; v[1].pos.y = -2.5f; v[1].pos.z = 0.0f;
+	v[2].pos.x = -6.0f; v[2].pos.y = -2.5f; v[2].pos.z = 0.0f;
+	// ポリゴンのローカル座標の位置を指定 end
+
+	//ワールド座標変換用の行列の算出 start
+	D3DXMATRIX mat_world, mat_trans, mat_rot, mat_rotx, mat_roty, mat_rotz, mat_scale, mat_view;
+
+	D3DXMatrixIdentity(&mat_world);
+	D3DXMatrixIdentity(&mat_rot);
+	D3DXMatrixIdentity(&mat_view);
+
+	InverseViewMatrix(&mat_view);
+
+	mat_view._41 = 0.f;
+	mat_view._42 = 0.f;
+	mat_view._43 = 0.f;
+
+	//static float test2 = 1.f;
+	//test2++;
+
+	// 移動
+	D3DXMatrixTranslation(&mat_trans, 0.f, 0.f, 0.f);
+
+	// 掛け合わせ(拡縮 * 回転 * 移動)
+	mat_world = mat_trans * mat_view;
+
+	g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat_world);
+	//ワールド座標変換用の行列の算出 end
+
+	g_pD3DDevice->SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE);
+
+	g_pD3DDevice->SetTexture(0, NULL);
+
+	g_pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 1, v, sizeof(VERTEX));
+
+	g_pD3DDevice->EndScene();
+
+	g_pD3DDevice->Present(NULL, NULL, NULL, NULL);
+
+}
+
 
 void Draw()
 {
@@ -181,8 +278,6 @@ void Draw()
 	D3DXMATRIX mat_world, mat_trans, mat_rot, mat_rotx, mat_roty, mat_rotz, mat_scale;
 	D3DXMatrixIdentity(&mat_world);
 	D3DXMatrixIdentity(&mat_rot);
-	D3DXMatrixIdentity(&mat_trans);
-	D3DXMatrixIdentity(&mat_scale);
 
 	// 移動
 #if 0
@@ -198,7 +293,7 @@ void Draw()
 
 	//D3DXMatrixRotationX(&mat_rotx, D3DXToRadian(test));
 
-	HandMadeRotationX(&mat_rotx, D3DXToRadian(test));
+	HandMadeRotationX(&mat_rotx, D3DXToRadian(0.f));
 
 	//D3DXMatrixRotationY(&mat_roty, D3DXToRadian(test));
 	HandMadeRotationY(&mat_roty, D3DXToRadian(0.f));

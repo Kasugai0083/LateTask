@@ -5,7 +5,7 @@
 #include "Size.h"
 
 
-#define WINDOW_CLASS_NAME "Window"	//!< ウィンドウクラス名
+#define WINDOW_CLASS_NAME TEXT("Window")	//!< ウィンドウクラス名
 
 
 class Window {

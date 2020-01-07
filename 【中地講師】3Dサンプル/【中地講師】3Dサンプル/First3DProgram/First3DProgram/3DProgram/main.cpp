@@ -98,8 +98,11 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 			}
 		}
 		else {
+
+
 			Transform();
 			Draw();
+			//DrawBillBoard();
 		}
 	}
 }

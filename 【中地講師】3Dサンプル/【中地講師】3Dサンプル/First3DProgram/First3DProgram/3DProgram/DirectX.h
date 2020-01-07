@@ -16,7 +16,8 @@ typedef struct _VERTEX
 }VERTEX;
 
 bool InitDirectX(HWND window_handle);
-void Transform(void);
+void Transform();
 void Draw(void);
+void DrawBillBoard();
 
 #endif
