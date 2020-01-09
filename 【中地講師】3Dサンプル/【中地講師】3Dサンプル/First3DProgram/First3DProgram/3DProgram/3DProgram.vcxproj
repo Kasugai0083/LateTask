@@ -80,12 +80,14 @@
   <ItemGroup>
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="Drawer.cpp" />
+    <ClCompile Include="HandMade.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="XFile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectX.h" />
     <ClInclude Include="Drawer.h" />
+    <ClInclude Include="HandMade.h" />
     <ClInclude Include="XFile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

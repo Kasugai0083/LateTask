@@ -2,6 +2,7 @@
 #include "DirectX.h"
 #include <string>
 #include <map>
+#include "HandMade.h"
 
 // グローバル変数
 LPDIRECT3D9 g_pD3DInterface;	// DirectXインターフェース
@@ -116,80 +117,12 @@ void Transform()
 
 	D3DXMatrixPerspectiveFovLH(
 		&matProj,
-		D3DXToRadian(100),	// 画角
+		D3DXToRadian(60),	// 画角
 		aspect,				// アスペクト比
 		0.1f,				// near
 		500.0f);			// far
 	g_pD3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
 	//射影座標変換用の行列算出 end
-}
-
-
-
-void HandMadeTranslation(D3DXMATRIX* matrix_, float x_, float y_, float z_) {
-	D3DXMatrixIdentity(matrix_);
-
-	matrix_->_41 += x_;
-	matrix_->_42 += y_;
-	matrix_->_43 += z_;
-
-}
-void HandMadeBillBoard(D3DXMATRIX* matrix_) {
-	D3DXMatrixIdentity(matrix_);
-
-	matrix_->_41 = 0.f;
-	matrix_->_42 = 0.f;
-	matrix_->_43 = 0.f;
-
-}
-
-void HandMadeScaling(D3DXMATRIX* matrix_, float x_, float y_, float z_) {
-	D3DXMatrixIdentity(matrix_);
-
-	matrix_->_11 = x_;
-	matrix_->_22 = y_;
-	matrix_->_33 = z_;
-	
-}
-
-void HandMadeRotationX(D3DXMATRIX* matrix_, float radian_) {
-	D3DXMatrixIdentity(matrix_);
-
-	matrix_->_22 = cosf(radian_);
-	matrix_->_23 = sinf(radian_);
-	matrix_->_32 = -sinf(radian_);
-	matrix_->_33 = cosf(radian_);
-
-}
-
-void HandMadeRotationY(D3DXMATRIX* matrix_, float radian_) {
-	D3DXMatrixIdentity(matrix_);
-
-	matrix_->_11 = cosf(radian_);
-	matrix_->_13 = -sinf(radian_);
-	matrix_->_31 = sinf(radian_);
-	matrix_->_33 = cosf(radian_);
-
-}
-void HandMadeRotationZ(D3DXMATRIX* matrix_, float radian_) {
-	D3DXMatrixIdentity(matrix_);
-
-	matrix_->_11 = cosf(radian_);
-	matrix_->_12 = sinf(radian_);
-	matrix_->_21 = -sinf(radian_);
-	matrix_->_22 = cosf(radian_);
-
-}
-
-void HandMadeMultiply(D3DXMATRIX* matrix_, D3DXMATRIX* matrix2_, D3DXMATRIX* matrix3_) {
-
-	*matrix_ = (*matrix2_) * (*matrix3_);
-
-}
-
-void InverseViewMatrix(D3DXMATRIX* out)
-{
-	D3DXMatrixInverse(out, NULL, &matView);
 }
 
 void StartDraw() {
@@ -208,138 +141,6 @@ void EndDraw() {
 	g_pD3DDevice->EndScene();
 
 	g_pD3DDevice->Present(NULL, NULL, NULL, NULL);
-}
-
-void DrawBillBoard() 
-{
-
-
-	//ライティングを無効にする。
-	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-
-	VERTEX v[4];
-
-	// 三角形を描画
-	// ポリゴンのローカル座標の位置を指定 start
-	v[0].color = D3DCOLOR_ARGB(255, 255, 255, 255);
-	v[1].color = D3DCOLOR_ARGB(255, 255, 255, 255);
-	v[2].color = D3DCOLOR_ARGB(255, 255, 255, 255);
-	v[0].pos.x = 0.0f; v[0].pos.y = 3.5f; v[0].pos.z = 0.0f;
-	v[1].pos.x = 6.0f; v[1].pos.y = -2.5f; v[1].pos.z = 0.0f;
-	v[2].pos.x = -6.0f; v[2].pos.y = -2.5f; v[2].pos.z = 0.0f;
-	// ポリゴンのローカル座標の位置を指定 end
-
-	//ワールド座標変換用の行列の算出 start
-	D3DXMATRIX mat_world, mat_trans, mat_rot, mat_rotx, mat_roty, mat_rotz, mat_scale, mat_view;
-
-	D3DXMatrixIdentity(&mat_world);
-	D3DXMatrixIdentity(&mat_rot);
-	D3DXMatrixIdentity(&mat_view);
-
-	InverseViewMatrix(&mat_view);
-
-	mat_view._41 = 0.f;
-	mat_view._42 = 0.f;
-	mat_view._43 = 0.f;
-
-	//static float test2 = 1.f;
-	//test2++;
-
-	// 移動
-	D3DXMatrixTranslation(&mat_trans, 0.f, 0.f, 0.f);
-
-	// 掛け合わせ(拡縮 * 回転 * 移動)
-	mat_world = mat_trans * mat_view;
-
-	g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat_world);
-	//ワールド座標変換用の行列の算出 end
-
-	g_pD3DDevice->SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE);
-
-	g_pD3DDevice->SetTexture(0, NULL);
-
-	g_pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 1, v, sizeof(VERTEX));
-
-
-
-}
-
-
-void Draw()
-{
-	//ライティングを無効にする。
-	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-
-	VERTEX v[4];
-
-	// 三角形を描画
-	// ポリゴンのローカル座標の位置を指定 start
-	v[0].color = D3DCOLOR_ARGB(255, 255, 255, 255);
-	v[1].color = D3DCOLOR_ARGB(255, 255, 255, 255);
-	v[2].color = D3DCOLOR_ARGB(255, 255, 255, 255);
-	v[0].pos.x = 0.0f; v[0].pos.y = 3.5f; v[0].pos.z = 0.0f;
-	v[1].pos.x = 6.0f; v[1].pos.y = -2.5f; v[1].pos.z = 0.0f;
-	v[2].pos.x = -6.0f; v[2].pos.y = -2.5f; v[2].pos.z = 0.0f;
-	// ポリゴンのローカル座標の位置を指定 end
-
-	//ワールド座標変換用の行列の算出 start
-	D3DXMATRIX mat_world, mat_trans, mat_rot, mat_rotx, mat_roty, mat_rotz, mat_scale;
-	D3DXMatrixIdentity(&mat_world);
-	D3DXMatrixIdentity(&mat_rot);
-
-	// 移動
-#if 0
-	D3DXMatrixTranslation(&mat_trans, 0.0f, 10.0f, 10.0f);
-#else 
-	HandMadeTranslation(&mat_trans, 0.0f, 0.0f, 10.0f);
-#endif
-	// 回転
-
-	static float test = 1.f;
-
-	test++;
-
-	//D3DXMatrixRotationX(&mat_rotx, D3DXToRadian(test));
-
-	HandMadeRotationX(&mat_rotx, D3DXToRadian(0.f));
-
-	//D3DXMatrixRotationY(&mat_roty, D3DXToRadian(test));
-	HandMadeRotationY(&mat_roty, D3DXToRadian(0.f));
-
-	//D3DXMatrixRotationZ(&mat_rotz, D3DXToRadian(test));
-	HandMadeRotationZ(&mat_rotz, D3DXToRadian(0.f));
-
-	/**
-	* 第一引数 => 結果を受け取る
-	* 第二引数 => 掛け合わせる値
-	* 第三引数 => 掛け合わせる値
-	*/
-	//D3DXMatrixMultiply(&mat_rot, &mat_rot, &mat_roty);
-	//D3DXMatrixMultiply(&mat_rot, &mat_rot, &mat_rotx);
-	//D3DXMatrixMultiply(&mat_rot, &mat_rot, &mat_rotz);
-
-	HandMadeMultiply(&mat_rot, &mat_rot, &mat_roty);
-	HandMadeMultiply(&mat_rot, &mat_rot, &mat_rotx);
-	HandMadeMultiply(&mat_rot, &mat_rot, &mat_rotz);
-
-	// 拡大
-#if 0
-	D3DXMatrixScaling(&mat_scale, 1.0f, 1.0f, 1.0f);
-#else
-	HandMadeScaling(&mat_scale, 2.f, 2.f, 1.f);
-#endif
-	// 掛け合わせ(拡縮 * 回転 * 移動)
-	mat_world *= mat_scale * mat_rot * mat_trans;
-
-	g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat_world);
-	//ワールド座標変換用の行列の算出 end
-
-	g_pD3DDevice->SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE);
-
-	g_pD3DDevice->SetTexture(0, NULL);
-
-	g_pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 1, v, sizeof(VERTEX));
-
 }
 
 void SetLighting() {
