@@ -9,18 +9,15 @@ class XFile;
 class Drawer
 {
 public:
-	Drawer(D3DXVECTOR3 pos, D3DXVECTOR3 scale, D3DXVECTOR3 angle, XFile* xfile) :
+	Drawer(D3DXVECTOR3 pos, D3DXVECTOR3 scale, D3DXVECTOR3 angle, XFile *xfile) : 
 		m_Pos(pos),
 		m_Scale(scale),
 		m_Angle(angle),
-		m_pXFile(xfile),
-		PlusSwitch(true)
+		m_pXFile(xfile)
 	{}
 
 	void Draw(void);
-	void Update();
 private:
-	bool PlusSwitch;
 	D3DXVECTOR3 m_Pos;
 	D3DXVECTOR3 m_Scale;
 	D3DXVECTOR3 m_Angle;

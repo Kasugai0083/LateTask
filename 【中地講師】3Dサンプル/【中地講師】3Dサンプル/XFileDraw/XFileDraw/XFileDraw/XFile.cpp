@@ -26,14 +26,14 @@ bool XFile::Load(std::string file_name)
 
 	// ①．XFileの読み込み start
 	if (FAILED(D3DXLoadMeshFromXA(
-		file_name.c_str(),		//ファイル名
-		D3DXMESH_SYSTEMMEM,		//固定でＯＫ
-		g_pD3DDevice,			//DirectXグラフィックデバイス
-		NULL,					//今回は使わない
-		&p_material_buffer,		//material_bufferを直接利用しても良い
-		NULL,					//今回は使わない
-		&m_MaterialNum,			//out マテリアルの数
-		&m_pMesh) ) )			//out メッシュデータ
+		file_name.c_str(),
+		D3DXMESH_SYSTEMMEM,
+		g_pD3DDevice,
+		NULL,
+		&p_material_buffer,
+		NULL,
+		&m_MaterialNum,
+		&m_pMesh) ) )
 	{
 		return false;
 	}
@@ -59,7 +59,7 @@ bool XFile::Load(std::string file_name)
 		// マテリアルで設定されているテクスチャ読み込み
 		if (pmat_list[i].pTextureFilename != NULL)
 		{
-			file_name = pmat_list[i].pTextureFilename;
+			std::string file_name = pmat_list[i].pTextureFilename;
 			LPDIRECT3DTEXTURE9 texture = NULL;
 			if (g_TextureList[file_name] == NULL)
 			{
@@ -80,7 +80,6 @@ bool XFile::Load(std::string file_name)
 	return true;
 }
 
-//デストラクタ
 XFile::~XFile(void)
 {
 	// マテリアルリストの解放
@@ -108,64 +107,12 @@ XFile::~XFile(void)
 		m_pTextureList = NULL;
 	}
 
-	//メッシュの解放
-	//m_pMeshMaterialList
-	if (m_pMesh != nullptr) {
-		delete[](m_pMesh);
-		m_pMesh = nullptr;
-	}
-
 	// テクスチャファイル名リストの初期化
 	m_TextureNameList.clear();
 }
 
 void XFile::Draw(void)
 {
-
-	//D3DXMATRIX world;
-	//D3DXMATRIX translate;
-	//D3DXMATRIX scale;
-	//D3DXMATRIX rot_x;
-	//D3DXMATRIX rot_y;
-	//D3DXMATRIX rot_z;
-	//D3DXMATRIX rot;
-
-	//m_X += 0.00f;
-	//m_Y += 0.00f;
-	//m_Z += 0.0f;
-
-	//m_Scale = 1.0f;
-
-	////単位行列化
-	//D3DXMatrixIdentity(&world);
-	//D3DXMatrixIdentity(&translate);
-	//D3DXMatrixIdentity(&scale);
-	//D3DXMatrixIdentity(&rot_x);
-	//D3DXMatrixIdentity(&rot_y);
-	//D3DXMatrixIdentity(&rot_z);
-	//D3DXMatrixIdentity(&rot);
-
-	////移動行列作成
-	//D3DXMatrixTranslation(&translate, m_X, m_Y, m_Z);
-
-	////拡縮行列作成
-	//D3DXMatrixScaling(&scale, m_Scale, m_Scale, m_Scale);
-
-	////回転行列作成
-	//D3DXMatrixRotationX(&rot_x, D3DXToRadian(30.0f));
-	//D3DXMatrixRotationY(&rot_y, D3DXToRadian(60.0f));
-	//D3DXMatrixRotationZ(&rot_z, D3DXToRadian(45.0f));
-	//rot = rot_x * rot_y * rot_z;
-
-	////ワールド行列作成
-	//world *= scale * rot * translate;
-
-	////ワールド行列設定
-	//g_pD3DDevice->SetTransform(D3DTS_WORLD, &world);
-
-	//XFile描画時のみデプスバッファをONにする
-	g_pD3DDevice->SetRenderState(D3DRS_ZENABLE, true);
-
 	for (DWORD i = 0; i < m_MaterialNum; i++)
 	{
 		// マテリアルの設定
@@ -174,16 +121,5 @@ void XFile::Draw(void)
 		g_pD3DDevice->SetTexture(0, m_pTextureList[i]);
 		// メッシュを描画
 		m_pMesh->DrawSubset(i);
-
 	}
-	// マテリアルの設定は次のSetMaterialまで引き継がれる
-	g_pD3DDevice->SetMaterial(NULL);
-
-
-	g_pD3DDevice->SetRenderState(D3DRS_ZENABLE, false);
-
-}
-
-
-void XFile::Update() {
 }

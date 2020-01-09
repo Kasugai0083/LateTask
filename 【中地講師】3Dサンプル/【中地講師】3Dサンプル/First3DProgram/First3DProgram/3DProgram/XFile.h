@@ -12,20 +12,15 @@ public:
 		m_MaterialNum(0),
 		m_pMesh(NULL),
 		m_pMeshMaterialList(NULL),
-		m_pTextureList(NULL),
-		m_X(0),
-		m_Y(0),
-		m_Z(0)
+		m_pTextureList(NULL)
 	{}
 
 	~XFile();
 
-	void Update();
 	bool Load(std::string file_name);
 	void Draw();
 
 private:
-	float m_X, m_Y, m_Z, m_Scale;
 	DWORD m_MaterialNum;
 	LPD3DXMESH m_pMesh;
 	D3DMATERIAL9* m_pMeshMaterialList;

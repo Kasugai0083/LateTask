@@ -37,7 +37,7 @@ bool XFile::Load(std::string file_name)
 
 		if(pmat_list[i].pTextureFilename != NULL)
 		{
-			file_name = pmat_list[i].pTextureFilename;
+			std::string file_name = pmat_list[i].pTextureFilename;
 			LPDIRECT3DTEXTURE9 texture = NULL;
 			if(g_TextureList[file_name] == NULL)
 			{
@@ -73,9 +73,28 @@ XFile::~XFile()
 			if(m_pTextureList[i] != NULL &&
 				g_TextureList[m_TextureNameList[i]] != NULL)
 			{
-			
+				g_TextureList[m_TextureNameList[i]]->Release();
+				m_pTextureList[i] = NULL;
 			}
 		}
+
+		delete[](m_pTextureList);
+		m_pTextureList = NULL;
+
+	}
+
+	m_TextureNameList.clear();
+}
+
+void XFile::Draw()
+{
+	for(DWORD i = 0; i < m_MaterialNum; i++)
+	{
+		g_pD3DDevice->SetMaterial(&m_pMeshMaterialList[i]);
+
+		g_pD3DDevice->SetTexture(0, m_pTextureList[i]);
+
+		m_pMesh->DrawSubset(i);
 	}
 
 }

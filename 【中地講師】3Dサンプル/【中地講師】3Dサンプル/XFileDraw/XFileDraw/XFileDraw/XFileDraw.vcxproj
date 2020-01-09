@@ -78,14 +78,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="Drawer.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="XFile.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="DirectX.h" />
     <ClInclude Include="Drawer.h" />
     <ClInclude Include="XFile.h" />

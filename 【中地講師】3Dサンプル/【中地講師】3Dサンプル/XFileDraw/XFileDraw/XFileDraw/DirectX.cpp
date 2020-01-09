@@ -52,11 +52,6 @@ bool InitDirectX(HWND window_handle)
 	// スワップエフェクト => バックバッファとフロントバッファへの切り替え方法
 	g_pD3DPresentParam->SwapEffect = D3DSWAPEFFECT_DISCARD;
 
-	//デプスとステンシルバッファの有効設定
-	g_pD3DPresentParam->EnableAutoDepthStencil = true;
-	//デプスとステンシルバッファのフォーマット設定
-	g_pD3DPresentParam->AutoDepthStencilFormat = D3DFMT_D16;
-
 	// DirectDeviceの作成
 	if (FAILED(g_pD3DInterface->CreateDevice(D3DADAPTER_DEFAULT,
 		D3DDEVTYPE_HAL,
@@ -102,20 +97,20 @@ bool InitDirectX(HWND window_handle)
 */
 void Transform(void)
 {
-	D3DXMATRIX matProj;
+	D3DXMATRIX matProj, matView;
 
-	////ビュー座標変換用の行列算出 start
-	//D3DXVECTOR3 camera_pos(0.0f, 0.0f, -10.0f); // カメラ位置
-	//D3DXVECTOR3 eye_pos(0.0f, 0.0f, 0.0f);		// 注視点
-	//D3DXVECTOR3 up_vector(0.0f, 1.0f, 0.0f);	// カメラの向き
+	//ビュー座標変換用の行列算出 start
+	D3DXVECTOR3 camera_pos(0.0f, 0.0f, -10.0f); // カメラ位置
+	D3DXVECTOR3 eye_pos(0.0f, 0.0f, 0.0f);		// 注視点
+	D3DXVECTOR3 up_vector(0.0f, 1.0f, 0.0f);	// カメラの向き
 
-	//D3DXMatrixIdentity(&matView);
-	//D3DXMatrixLookAtLH(&matView, 
-	//	&camera_pos,				// カメラ座標
-	//	&eye_pos,					// 注視点座標
-	//	&up_vector);				// カメラの上の向きのベクトル
-	//g_pD3DDevice->SetTransform(D3DTS_VIEW, &matView);
-	////ビュー座標変換用の行列算出 end
+	D3DXMatrixIdentity(&matView);
+	D3DXMatrixLookAtLH(&matView, 
+		&camera_pos,				// カメラ座標
+		&eye_pos,					// 注視点座標
+		&up_vector);				// カメラの上の向きのベクトル
+	g_pD3DDevice->SetTransform(D3DTS_VIEW, &matView);
+	//ビュー座標変換用の行列算出 end
 
 	//射影座標変換用の行列算出 start
 	D3DVIEWPORT9 vp;
@@ -145,16 +140,8 @@ void Transform(void)
 void StartDraw(void)
 {
 	// 青色でレンダリングターゲットをクリア
-	g_pD3DDevice->Clear(0, 
-		NULL,
-		//クリアするバッファの設定
-		D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
-		//クリアカラー
-		D3DCOLOR_XRGB(0, 0, 255),
-		//デプスバッファの初期値
-		1.0f,
-		//ステンシルバッファの初期値
-		0);
+	g_pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET,
+		D3DCOLOR_ARGB(255, 0, 0, 0), 1.0f, 0);
 	
 	g_pD3DDevice->BeginScene();
 }

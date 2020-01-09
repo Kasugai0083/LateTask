@@ -1,7 +1,11 @@
 #include <windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
+#include <map>
 #include "DirectX.h"
+#include "XFile.h"
+#include "Drawer.h"
+#include <string>
 
 // 静的ライブラリ
 #pragma comment(lib, "d3d9.lib")
@@ -10,6 +14,7 @@
 extern LPDIRECT3D9 g_pD3DInterface;	// DirectXインターフェース
 extern D3DPRESENT_PARAMETERS *g_pD3DPresentParam;
 extern LPDIRECT3DDEVICE9 g_pD3DDevice;
+extern std::map<std::string, XFile*>g_pXFileList;
 
 LRESULT CALLBACK WindowProc(HWND window_handle, UINT message_id, WPARAM wparam, LPARAM lparam)
 {
@@ -81,6 +86,20 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	ShowWindow(hWnd, SW_SHOW);
 	UpdateWindow(hWnd);
 
+	XFile obj;
+
+	std::string objname = "Sample01.x";
+
+	g_pXFileList["Sample01.x"] = new XFile();
+	g_pXFileList["Sample01.x"]->Load("Sample01.x");
+
+	Drawer obj1(
+		D3DXVECTOR3(0.f, 0.f, 0.f),
+		D3DXVECTOR3(1.f, 1.f, 1.f),
+		D3DXVECTOR3(0.f, 50.f, 0.f),
+		g_pXFileList["Sample01.x"]
+	);
+
 	while (true)
 	{
 		bool message_ret = false;
@@ -99,10 +118,20 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 		}
 		else {
 
+			StartDraw();
 
 			Transform();
-			Draw();
+
+			SetLighting();
+
+			obj1.Draw();
+
 			//DrawBillBoard();
+
+			EndDraw();
+
+			//obj.Draw();
+
 		}
 	}
 }

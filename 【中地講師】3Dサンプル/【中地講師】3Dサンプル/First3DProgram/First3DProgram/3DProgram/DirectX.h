@@ -20,4 +20,10 @@ void Transform();
 void Draw(void);
 void DrawBillBoard();
 
+void StartDraw();
+
+void EndDraw();
+
+void SetLighting();
+
 #endif

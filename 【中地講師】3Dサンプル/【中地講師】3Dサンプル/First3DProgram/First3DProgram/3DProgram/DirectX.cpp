@@ -1,10 +1,14 @@
 #include <Windows.h>
 #include "DirectX.h"
+#include <string>
+#include <map>
 
 // グローバル変数
 LPDIRECT3D9 g_pD3DInterface;	// DirectXインターフェース
 D3DPRESENT_PARAMETERS *g_pD3DPresentParam;
 LPDIRECT3DDEVICE9 g_pD3DDevice;
+std::map<std::string, LPDIRECT3DTEXTURE9> g_TextureList;	// テクスチャリスト
+
 
 bool InitDirectX(HWND window_handle)
 {
@@ -80,7 +84,7 @@ void Transform()
 	test++;
 
 	float rad = test * 3.14f / 180.f;
-	float distance = 50.0f;
+	float distance = 10.0f;
 	D3DXVECTOR3 vec = D3DXVECTOR3(
 		sinf(rad) * distance,
 		0.0f,
@@ -90,7 +94,7 @@ void Transform()
 
 
 	//ビュー座標変換用の行列算出 start
-	D3DXVECTOR3 camera_pos(0.f, 0.f, 0.f); // カメラ位置
+	D3DXVECTOR3 camera_pos(0.f, 0.f, -5.f); // カメラ位置
 	D3DXVECTOR3 eye_pos(0.0f, 0.0f, 0.0f);		// 注視点
 	D3DXVECTOR3 up_vector(0.0f, 1.0f, 0.0f);	// カメラの向き
 
@@ -120,7 +124,7 @@ void Transform()
 	//射影座標変換用の行列算出 end
 }
 
-VERTEX v[4];
+
 
 void HandMadeTranslation(D3DXMATRIX* matrix_, float x_, float y_, float z_) {
 	D3DXMatrixIdentity(matrix_);
@@ -188,19 +192,32 @@ void InverseViewMatrix(D3DXMATRIX* out)
 	D3DXMatrixInverse(out, NULL, &matView);
 }
 
-void DrawBillBoard() 
-{
+void StartDraw() {
 	g_pD3DDevice->Clear(0L,
 		NULL,
 		D3DCLEAR_TARGET,
-		D3DCOLOR_ARGB(255, 0, 0, 0),
+		D3DCOLOR_ARGB(255, 0, 0, 255),
 		1.0f,	// Zバッファの初期値
 		0);		// ステンシルバッファの初期値
 
 	g_pD3DDevice->BeginScene();
+}
+
+void EndDraw() {
+
+	g_pD3DDevice->EndScene();
+
+	g_pD3DDevice->Present(NULL, NULL, NULL, NULL);
+}
+
+void DrawBillBoard() 
+{
+
 
 	//ライティングを無効にする。
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	VERTEX v[4];
 
 	// 三角形を描画
 	// ポリゴンのローカル座標の位置を指定 start
@@ -243,26 +260,17 @@ void DrawBillBoard()
 
 	g_pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 1, v, sizeof(VERTEX));
 
-	g_pD3DDevice->EndScene();
 
-	g_pD3DDevice->Present(NULL, NULL, NULL, NULL);
 
 }
 
 
 void Draw()
 {
-	g_pD3DDevice->Clear(0L,
-		NULL,
-		D3DCLEAR_TARGET,
-		D3DCOLOR_ARGB(255, 0, 0, 0),
-		1.0f,	// Zバッファの初期値
-		0);		// ステンシルバッファの初期値
-
-	g_pD3DDevice->BeginScene();
-
 	//ライティングを無効にする。
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	VERTEX v[4];
 
 	// 三角形を描画
 	// ポリゴンのローカル座標の位置を指定 start
@@ -332,8 +340,21 @@ void Draw()
 
 	g_pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 1, v, sizeof(VERTEX));
 
-	g_pD3DDevice->EndScene();
+}
 
-	g_pD3DDevice->Present(NULL, NULL, NULL, NULL);
+void SetLighting() {
+	D3DLIGHT9 light;
+	D3DXVECTOR3 vec_direction(0, 0, 1);
+	ZeroMemory(&light, sizeof(D3DLIGHT9));
 
+	light.Type = D3DLIGHT_DIRECTIONAL;
+	light.Diffuse.r = 1.f;
+	light.Diffuse.g = 1.f;
+	light.Diffuse.b = 1.f;
+
+	D3DXVec3Normalize((D3DXVECTOR3*)& light.Direction, &vec_direction);
+	light.Range = 200.f;
+	g_pD3DDevice->SetLight(0, &light);
+	g_pD3DDevice->LightEnable(0, true);
+	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 }

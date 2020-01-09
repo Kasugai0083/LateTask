@@ -3,13 +3,11 @@
 #include "DirectX.h"
 #include "XFile.h"
 #include "Drawer.h"
-#include "Camera.h"
 
 extern LPDIRECT3D9 g_pD3DInterface;	// DirectXインターフェース
 extern D3DPRESENT_PARAMETERS *g_pD3DPresentParam;
 extern LPDIRECT3DDEVICE9 g_pD3DDevice;
 extern std::map<std::string, XFile *>g_pXFileList;
-
 
 LRESULT CALLBACK WindowProc(HWND window_handle, UINT message_id, WPARAM wparam, LPARAM lparam)
 {
@@ -84,7 +82,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	// 読み込みファイル名リスト
 	std::string file_name_list[] =
 	{
-		"Witchwait.X",
+		"Sample01.x",
 		"Sample02.x",
 	};
 
@@ -97,34 +95,16 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
 	// XFileオブジェクト作成
 	Drawer obj1(
-		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
+		D3DXVECTOR3(3.0f, 0.0f, 0.0f),
 		D3DXVECTOR3(1.0f, 1.0f, 1.0f),
-		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
-		g_pXFileList["Witchwait.X"]);
+		D3DXVECTOR3(0.0f, 50.0f, 0.0f),
+		g_pXFileList["Sample01.x"]);
 
 	Drawer obj2(
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DXVECTOR3(0.01f, 0.01f, 0.01f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		g_pXFileList["Sample02.x"]);
-
-	//カメラ作成　位置を入力
-	//Vector CPos, Gaze;
-	//CPos.m_X = 0.0f;
-	//CPos.m_Y = 0.0f;
-	//CPos.m_Z = -150.0f;
-
-	//Gaze.m_X = 0.0f;
-	//Gaze.m_Y = 0.0f;
-	//Gaze.m_Z = 0.0f;
-	//Camera camera(CPos, Gaze);
-
-	Vec2 vec2(0.0f, 0.0f, 0.0f);
-
-	Camera camera(
-		Vector2(0.0f, 0.0f, -150.0f),
-		Vector2(0.0f, 0.0f, 0.0f)
-	);
 
 	while (true)
 	{
@@ -142,9 +122,6 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 				DispatchMessage(&msg);
 			}
 		} else {
-			//カメラのアップデート
-			camera.Update();
-
 			// 描画開始
 			StartDraw();
 
@@ -156,11 +133,8 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
 			// オブジェクト描画
 			obj1.Draw();
-			//obj2.Draw();
+			obj2.Draw();
 			
-			//オブジェクトのアップデート
-			obj1.Update();
-
 			// 描画終了
 			EndDraw();
 		}
