@@ -1,8 +1,11 @@
 #ifndef DIRECTX_H_
 #define DIRECTX_H_
 
+#include "SingletonTemplate.h"
 #include <d3d9.h>
 #include <d3dx9.h>
+#include <map>
+#include <string>
 
 // 静的ライブラリ
 #pragma comment(lib, "d3d9.lib")
@@ -15,15 +18,59 @@ typedef struct _VERTEX
 	D3DCOLOR color;
 }VERTEX;
 
-bool InitDirectX(HWND window_handle);
-void Transform();
-void Draw(void);
-void DrawBillBoard();
+/**
+* DirextXステータス構造体
+*/
 
-void StartDraw();
+struct DXStatus 
+{
+	//! DirectXインターフェース
+	LPDIRECT3D9 m_D3DInterface;
+	//! DirectXの設定
+	D3DPRESENT_PARAMETERS* m_pD3DPresentParam;
+	//! DirectXデバイス情報
+	LPDIRECT3DDEVICE9 m_D3DDevice;
+	//! テクスチャリスト
+	std::map<std::string, LPDIRECT3DTEXTURE9> m_TextureList;
+};
 
-void EndDraw();
+class DXManager : public Singleton<DXManager>
+{
+public:
+	bool InitDirectX(HWND window_handle);
 
-void SetLighting();
+	/**
+	* ワールド座標へ変換
+	*/
+	void Transform();
+
+	void StartDraw();
+
+	void EndDraw();
+
+	/**
+	* 光源の設定
+	*/
+	void SetLighting();
+
+	void SendStatus(DXStatus* status_);
+
+protected:
+
+	DXStatus m_DXStatus;
+
+private:
+	friend Singleton<DXManager>;
+
+	DXManager() {};
+	virtual ~DXManager() {};
+
+	DXManager(const DXManager&) = delete;
+	DXManager& operator=(const DXManager&) = delete;
+	DXManager(const DXManager&&) = delete;
+	DXManager& operator=(const DXManager&&) = delete;
+};
+
+
 
 #endif

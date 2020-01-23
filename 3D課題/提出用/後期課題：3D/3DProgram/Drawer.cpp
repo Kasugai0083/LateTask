@@ -2,11 +2,12 @@
 #include "XFile.h"
 #include "HandMade.h"
 
-extern LPDIRECT3DDEVICE9 g_pD3DDevice;
 extern D3DXMATRIX matView;
 
 void Drawer::Draw()
 {
+	if (!m_Accesor) { return; }
+
 	D3DXMATRIX world_matrix, trans_matrix, rot_matrix, scale_matrix;
 	D3DXMATRIX rot_matrix_x, rot_matrix_y, rot_matrix_z;
 
@@ -31,7 +32,9 @@ void Drawer::Draw()
 
 	world_matrix *= scale_matrix * trans_matrix * rot_matrix * view_matrix;
 
-	g_pD3DDevice->SetTransform(D3DTS_WORLD, &world_matrix);
+	m_Accesor->GetDXStatus().m_D3DDevice->SetTransform(D3DTS_WORLD, &world_matrix);
+
+	//g_pD3DDevice->SetTransform(D3DTS_WORLD, &world_matrix);
 
 	if(m_pXFile != NULL)
 	{

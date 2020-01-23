@@ -1,19 +1,31 @@
 #include "XFile.h"
 #include <map>
 
-extern std::map<std::string, LPDIRECT3DTEXTURE9> g_TextureList;
-extern LPDIRECT3DDEVICE9 g_pD3DDevice;
-std::map<std::string, XFile*>g_pXFileList;
+LPDIRECT3DDEVICE9 test;
+Accesor* s_Accesor = Accesor::GetInstance();
 
 bool XFile::Load(std::string file_name)
 {
 
 	LPD3DXBUFFER p_material_buffer = NULL;
 
+
+
+	if (!s_Accesor) { return false; }
+
+	/*
+		file_name のデータを LoadMeshFromXA で出力
+		
+		p_material_buffer,
+		m_MaterialNum,
+		m_pMesh,
+
+		に値を入力
+	*/
 	if (FAILED(D3DXLoadMeshFromXA(
 		file_name.c_str(),
 		D3DXMESH_SYSTEMMEM,
-		g_pD3DDevice,
+		s_Accesor->GetDXStatus().m_D3DDevice,
 		NULL,
 		&p_material_buffer,
 		NULL,
@@ -39,14 +51,14 @@ bool XFile::Load(std::string file_name)
 		{
 			std::string file_name = pmat_list[i].pTextureFilename;
 			LPDIRECT3DTEXTURE9 texture = NULL;
-			if(g_TextureList[file_name] == NULL)
+			if(m_TextureList[file_name] == NULL)
 			{
-				D3DXCreateTextureFromFileA(g_pD3DDevice,
+				D3DXCreateTextureFromFileA(s_Accesor->GetDXStatus().m_D3DDevice,
 											file_name.c_str(),
-											&g_TextureList[file_name]);
+											&m_TextureList[file_name]);
 			}
 
-			m_pTextureList[i] = g_TextureList[file_name];
+			m_pTextureList[i] = m_TextureList[file_name];
 			m_TextureNameList[i] = file_name;
 
 		}
@@ -71,9 +83,9 @@ XFile::~XFile()
 		for(int i = 0; i < m_MaterialNum; i++)
 		{
 			if(m_pTextureList[i] != NULL &&
-				g_TextureList[m_TextureNameList[i]] != NULL)
+				m_TextureList[m_TextureNameList[i]] != NULL)
 			{
-				g_TextureList[m_TextureNameList[i]]->Release();
+				m_TextureList[m_TextureNameList[i]]->Release();
 				m_pTextureList[i] = NULL;
 			}
 		}
@@ -90,9 +102,9 @@ void XFile::Draw()
 {
 	for(DWORD i = 0; i < m_MaterialNum; i++)
 	{
-		g_pD3DDevice->SetMaterial(&m_pMeshMaterialList[i]);
+		s_Accesor->GetDXStatus().m_D3DDevice->SetMaterial(&m_pMeshMaterialList[i]);
 
-		g_pD3DDevice->SetTexture(0, m_pTextureList[i]);
+		s_Accesor->GetDXStatus().m_D3DDevice->SetTexture(0, m_pTextureList[i]);
 
 		m_pMesh->DrawSubset(i);
 	}

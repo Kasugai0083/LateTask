@@ -1,51 +1,42 @@
 #include <Windows.h>
 #include "DirectX.h"
-#include <string>
-#include <map>
 #include "HandMade.h"
 
-// グローバル変数
-LPDIRECT3D9 g_pD3DInterface;	// DirectXインターフェース
-D3DPRESENT_PARAMETERS *g_pD3DPresentParam;
-LPDIRECT3DDEVICE9 g_pD3DDevice;
-std::map<std::string, LPDIRECT3DTEXTURE9> g_TextureList;	// テクスチャリスト
-
-
-bool InitDirectX(HWND window_handle)
+bool DXManager::InitDirectX(HWND window_handle)
 {
 	// インターフェース作成
-	g_pD3DInterface = Direct3DCreate9(D3D_SDK_VERSION);
-	if (g_pD3DInterface == NULL)
+	m_DXStatus.m_D3DInterface = Direct3DCreate9(D3D_SDK_VERSION);
+	if (m_DXStatus.m_D3DInterface == NULL)
 	{
 		// 作成失敗
 		return false;
 	}
-
-	g_pD3DPresentParam = new D3DPRESENT_PARAMETERS;
-	if (g_pD3DPresentParam == NULL)
+	
+	m_DXStatus.m_pD3DPresentParam = new D3DPRESENT_PARAMETERS;
+	if (m_DXStatus.m_pD3DPresentParam == NULL)
 	{
 		return false;
 	}
-	ZeroMemory(g_pD3DPresentParam, sizeof(D3DPRESENT_PARAMETERS));
+	ZeroMemory(m_DXStatus.m_pD3DPresentParam, sizeof(D3DPRESENT_PARAMETERS));
 
 	// バックバッファの数 => 1
-	g_pD3DPresentParam->BackBufferCount = 1;
+	m_DXStatus.m_pD3DPresentParam->BackBufferCount = 1;
 	// バックバッファのフォーマット => D3DFMT_UNKNOWN(フォーマットを知りません)
-	g_pD3DPresentParam->BackBufferFormat = D3DFMT_UNKNOWN;
+	m_DXStatus.m_pD3DPresentParam->BackBufferFormat = D3DFMT_UNKNOWN;
 	// ウィンドウモード設定 => 定数で切り替え
-	g_pD3DPresentParam->Windowed = true;
+	m_DXStatus.m_pD3DPresentParam->Windowed = true;
 
 	// スワップエフェクト設定 => ディスプレイドライバ依存
 	// スワップエフェクト => バックバッファとフロントバッファへの切り替え方法
-	g_pD3DPresentParam->SwapEffect = D3DSWAPEFFECT_DISCARD;
+	m_DXStatus.m_pD3DPresentParam->SwapEffect = D3DSWAPEFFECT_DISCARD;
 
 	// DirectDeviceの作成
-	if (FAILED(g_pD3DInterface->CreateDevice(D3DADAPTER_DEFAULT,
+	if (FAILED(m_DXStatus.m_D3DInterface->CreateDevice(D3DADAPTER_DEFAULT,
 		D3DDEVTYPE_HAL,
 		window_handle,
 		D3DCREATE_HARDWARE_VERTEXPROCESSING | D3DCREATE_MULTITHREADED,
-		g_pD3DPresentParam,
-		&g_pD3DDevice)))
+		m_DXStatus.m_pD3DPresentParam,
+		&m_DXStatus.m_D3DDevice)))
 	{
 		return false;
 	}
@@ -57,15 +48,15 @@ bool InitDirectX(HWND window_handle)
 	view_port.X = 0;
 	view_port.Y = 0;
 	// ビューポートの幅
-	view_port.Width = g_pD3DPresentParam->BackBufferWidth;
+	view_port.Width = m_DXStatus.m_pD3DPresentParam->BackBufferWidth;
 	// ビューポートの高さ
-	view_port.Height = g_pD3DPresentParam->BackBufferHeight;
+	view_port.Height = m_DXStatus.m_pD3DPresentParam->BackBufferHeight;
 	// ビューポート深度設定
 	view_port.MinZ = 0.0f;
 	view_port.MaxZ = 1.0f;
 
 	// ビューポート設定
-	if (FAILED(g_pD3DDevice->SetViewport(&view_port)))
+	if (FAILED(m_DXStatus.m_D3DDevice->SetViewport(&view_port)))
 	{
 		return false;
 	}
@@ -75,7 +66,7 @@ bool InitDirectX(HWND window_handle)
 
 D3DXMATRIX matProj, matView;
 
-void Transform()
+void DXManager::Transform()
 {
 
 	static float test = 1.f;
@@ -107,12 +98,12 @@ void Transform()
 		&camera_pos,				// カメラ座標
 		&eye_pos,					// 注視点座標
 		&up_vector);				// カメラの上の向きのベクトル
-	g_pD3DDevice->SetTransform(D3DTS_VIEW, &matView);
+	m_DXStatus.m_D3DDevice->SetTransform(D3DTS_VIEW, &matView);
 	//ビュー座標変換用の行列算出 end
 
 	//射影座標変換用の行列算出 start
 	D3DVIEWPORT9 vp;
-	g_pD3DDevice->GetViewport(&vp);
+	m_DXStatus.m_D3DDevice->GetViewport(&vp);
 	float aspect = (float)vp.Width / (float)vp.Height;
 
 	D3DXMatrixPerspectiveFovLH(
@@ -121,29 +112,29 @@ void Transform()
 		aspect,				// アスペクト比
 		0.1f,				// near
 		500.0f);			// far
-	g_pD3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
+	m_DXStatus.m_D3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
 	//射影座標変換用の行列算出 end
 }
 
-void StartDraw() {
-	g_pD3DDevice->Clear(0L,
+void DXManager::StartDraw() {
+	m_DXStatus.m_D3DDevice->Clear(0L,
 		NULL,
 		D3DCLEAR_TARGET,
 		D3DCOLOR_ARGB(255, 0, 0, 255),
 		1.0f,	// Zバッファの初期値
 		0);		// ステンシルバッファの初期値
 
-	g_pD3DDevice->BeginScene();
+	m_DXStatus.m_D3DDevice->BeginScene();
 }
 
-void EndDraw() {
+void DXManager::EndDraw() {
 
-	g_pD3DDevice->EndScene();
+	m_DXStatus.m_D3DDevice->EndScene();
 
-	g_pD3DDevice->Present(NULL, NULL, NULL, NULL);
+	m_DXStatus.m_D3DDevice->Present(NULL, NULL, NULL, NULL);
 }
 
-void SetLighting() {
+void DXManager::SetLighting() {
 	D3DLIGHT9 light;
 	D3DXVECTOR3 vec_direction(0, 0, 1);
 	ZeroMemory(&light, sizeof(D3DLIGHT9));
@@ -155,7 +146,14 @@ void SetLighting() {
 
 	D3DXVec3Normalize((D3DXVECTOR3*)& light.Direction, &vec_direction);
 	light.Range = 200.f;
-	g_pD3DDevice->SetLight(0, &light);
-	g_pD3DDevice->LightEnable(0, true);
-	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
+	m_DXStatus.m_D3DDevice->SetLight(0, &light);
+	m_DXStatus.m_D3DDevice->LightEnable(0, true);
+	m_DXStatus.m_D3DDevice->SetRenderState(D3DRS_LIGHTING, true);
+}
+
+void DXManager::SendStatus(DXStatus* status_) {
+
+	if (m_DXStatus.m_D3DDevice == nullptr) { return; }
+
+	*status_ = m_DXStatus;
 }

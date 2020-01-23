@@ -119,8 +119,8 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
 			Lines.push_back(v1);
 			Lines.push_back(v2);
-			Lines.push_back(v3);
-			Lines.push_back(v4);
+			//Lines.push_back(v3);
+			//Lines.push_back(v4);
 
 			DWORD color = D3DCOLOR_ARGB(255, 255, 255, 255);
 

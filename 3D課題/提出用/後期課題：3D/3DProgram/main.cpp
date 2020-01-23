@@ -1,20 +1,22 @@
+
+#include "DirectX.h"
+#include "XFile.h"
+#include "Drawer.h"
+#include "Accesor.h"
+#include <string>
 #include <windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <map>
-#include "DirectX.h"
-#include "XFile.h"
-#include "Drawer.h"
-#include <string>
 
 // 静的ライブラリ
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
 
-extern LPDIRECT3D9 g_pD3DInterface;	// DirectXインターフェース
-extern D3DPRESENT_PARAMETERS *g_pD3DPresentParam;
-extern LPDIRECT3DDEVICE9 g_pD3DDevice;
-extern std::map<std::string, XFile*>g_pXFileList;
+//extern LPDIRECT3D9 g_pD3DInterface;	// DirectXインターフェース
+//extern D3DPRESENT_PARAMETERS *g_pD3DPresentParam;
+//extern LPDIRECT3DDEVICE9 g_pD3DDevice;
+//extern std::map<std::string, XFile*>g_pXFileList;
 
 LRESULT CALLBACK WindowProc(HWND window_handle, UINT message_id, WPARAM wparam, LPARAM lparam)
 {
@@ -78,7 +80,16 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 		return false;
 	}
 
-	if (InitDirectX(hWnd) == false)
+	//DirectXシングルトン作成
+	DXManager::CreateInstance();
+	DXManager* s_DXManager = DXManager::GetInstance();
+
+	//Accesorシングルトン作成
+	Accesor::CreateInstance();
+	Accesor* s_Accsesor = Accesor::GetInstance();
+
+
+	if (s_DXManager->InitDirectX(hWnd) == false)
 	{
 		return false;
 	}
@@ -90,14 +101,19 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
 	std::string objname = "Sample01.x";
 
-	g_pXFileList["Sample01.x"] = new XFile();
-	g_pXFileList["Sample01.x"]->Load("Sample01.x");
+	obj.SetXFileList("Sample01.x");
+	
+	/*
+		g_pXFileList["Sample01.x"] = new XFile();
+		g_pXFileList["Sample01.x"]->Load("Sample01.x");
+	*/
 
 	Drawer obj1(
 		D3DXVECTOR3(0.f, 0.f, 0.f),
 		D3DXVECTOR3(1.f, 1.f, 1.f),
 		D3DXVECTOR3(0.f, 50.f, 0.f),
-		g_pXFileList["Sample01.x"]
+		obj.GetXFileList("Sample01.x")
+		//g_pXFileList["Sample01.x"]
 	);
 
 	while (true)
@@ -118,20 +134,25 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 		}
 		else {
 
-			StartDraw();
+			s_Accsesor->Update();
 
-			Transform();
+			s_DXManager->StartDraw();
 
-			SetLighting();
+			s_DXManager->Transform();
+
+			s_DXManager->SetLighting();
 
 			obj1.Draw();
 
 			//DrawBillBoard();
 
-			EndDraw();
+			s_DXManager->EndDraw();
 
 			//obj.Draw();
 
 		}
 	}
+
+	DXManager::DestroyInstance();
+	Accesor::DestroyInstance();
 }

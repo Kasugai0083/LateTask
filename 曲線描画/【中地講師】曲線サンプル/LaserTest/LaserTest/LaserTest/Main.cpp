@@ -31,11 +31,11 @@ LineManager g_LineManager;
 
 void InitLine(Vec2 start, Vec2 end)
 {
-	g_LineManager.m_Width = 5.0f;
+	g_LineManager.m_Width = 10.0f;
 	g_LineManager.m_Line.clear();
 	g_LineManager.m_Start = start;
 	g_LineManager.m_End = end;
-	g_LineManager.m_Center = Vec2(100, 100);
+	g_LineManager.m_Center = Vec2(10, 10);
 	g_LineManager.m_Timer = 0;
 
 	Line line =
@@ -50,7 +50,7 @@ void UpdateLine()
 {
 	for (auto& line : g_LineManager.m_Line)
 	{
-		line.m_Counter--;
+		line.m_Counter -= 0;
 	}
 }
 
@@ -93,12 +93,12 @@ void DrawLine()
 			g_LineManager.m_Line[i + 1].m_Pos.X - g_LineManager.m_Line[i].m_Pos.X,
 			g_LineManager.m_Line[i + 1].m_Pos.Y - g_LineManager.m_Line[i].m_Pos.Y);
 
-		float percent = g_LineManager.m_Line[i].m_Counter / 120.0f;
+		//float percent = g_LineManager.m_Line[i].m_Counter / 120.0f;
 
-		if (percent <= 0.0f)
-		{
-			percent = 0.0f;
-		}
+		//if (percent <= 0.0f)
+		//{
+		//	percent = 0.0f;
+		//}
 
 		for (int j = 0; j < 2; j++)
 		{
@@ -124,6 +124,7 @@ void DrawLine()
 			LineDesc new_desc =
 			{
 				new_pos,
+				//比較	   //真の場合:偽の場合
 				alpha > 0.0f ? alpha : 0.0f
 			};
 
@@ -147,7 +148,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	int frame = 0;
 
-	InitLine(Vec2(0.0f, 200.0f), Vec2(200.0f, 200.0f));
+	InitLine(Vec2(0.0f, 300.0f), Vec2(300.0f, 200.0f));
 
 	while (true)
 	{

@@ -79,6 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Accesor.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="Drawer.cpp" />
     <ClCompile Include="HandMade.cpp" />
@@ -88,7 +89,9 @@
   <ItemGroup>
     <ClInclude Include="DirectX.h" />
     <ClInclude Include="Drawer.h" />
+    <ClInclude Include="Accesor.h" />
     <ClInclude Include="HandMade.h" />
+    <ClInclude Include="SingletonTemplate.h" />
     <ClInclude Include="XFile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
