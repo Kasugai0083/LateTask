@@ -84,10 +84,6 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	DXManager::CreateInstance();
 	DXManager* s_DXManager = DXManager::GetInstance();
 
-	//AccesorƒVƒ“ƒOƒ‹ƒgƒ“ì¬
-	Accesor::CreateInstance();
-	Accesor* s_Accsesor = Accesor::GetInstance();
-
 
 	if (s_DXManager->InitDirectX(hWnd) == false)
 	{
@@ -134,8 +130,6 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 		}
 		else {
 
-			s_Accsesor->Update();
-
 			s_DXManager->StartDraw();
 
 			s_DXManager->Transform();
@@ -154,5 +148,5 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	}
 
 	DXManager::DestroyInstance();
-	Accesor::DestroyInstance();
+
 }

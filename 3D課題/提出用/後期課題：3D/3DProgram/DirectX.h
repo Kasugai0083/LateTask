@@ -53,7 +53,8 @@ public:
 	*/
 	void SetLighting();
 
-	void SendStatus(DXStatus* status_);
+	DXStatus GetStatus() { return m_DXStatus; }
+	//DXStatus SendStatus(DXStatus* status_);
 
 protected:
 
