@@ -94,18 +94,20 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
 	XFile obj;
 
-	/*
+	std::map<std::string, XFile*>g_pXFileList;
+	
 	g_pXFileList["Sample01.x"] = new XFile();
 	g_pXFileList["Sample01.x"]->Load("Sample01.x");
-	*/
+	
+
 	obj.SetXFileList("Sample01.x");
 	
 	Drawer obj1(
 		D3DXVECTOR3(0.f, 0.f, 0.f),
 		D3DXVECTOR3(1.f, 1.f, 1.f),
 		D3DXVECTOR3(0.f, 50.f, 0.f),
-		obj.GetXFileList("Sample01.x")
-		//g_pXFileList["Sample01.x"]
+		//obj.GetXFileList("Sample01.x")
+		g_pXFileList["Sample01.x"]
 	);
 
 	while (true)
@@ -142,6 +144,8 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
 		}
 	}
+
+	delete g_pXFileList["Sample01.x"];
 
 	DXManager::DestroyInstance();
 

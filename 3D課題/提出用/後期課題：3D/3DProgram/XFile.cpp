@@ -1,6 +1,8 @@
 #include "XFile.h"
 #include <map>
 
+std::map<std::string, XFile*>g_pXFileList;
+
 bool XFile::Load(std::string file_name)
 {
 
