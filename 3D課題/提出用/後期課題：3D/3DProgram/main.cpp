@@ -33,10 +33,7 @@ LRESULT CALLBACK WindowProc(HWND window_handle, UINT message_id, WPARAM wparam, 
 }
 
 
-int APIENTRY WinMain(HINSTANCE hInstance,
-	HINSTANCE hPrevInstance,
-	LPSTR     lpCmpLine,
-	INT       nCmdShow)
+int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 {
 	HWND hWnd;
 	WNDCLASSEX window_class = {
@@ -45,7 +42,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 		WindowProc,						// ウィンドウプロシージャ
 		0,								// 補助メモリ
 		0,								// 補助メモリ
-		hInstance,						// このプログラムのインスタンスハンドル
+		GetModuleHandle(nullptr),						// このプログラムのインスタンスハンドル
 		LoadIcon(NULL, MAKEINTRESOURCE(IDI_APPLICATION)),// アイコン画像
 		LoadCursor(NULL, IDC_ARROW),	// カーソル画像
 		NULL,							// 背景ブラシ(背景色)
@@ -71,7 +68,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 		400,
 		NULL,
 		NULL,
-		hInstance,
+		GetModuleHandle(nullptr),
 		NULL);
 
 	if (hWnd == NULL)
@@ -96,18 +93,18 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
 	std::map<std::string, XFile*>g_pXFileList;
 	
-	g_pXFileList["Sample01.x"] = new XFile();
-	g_pXFileList["Sample01.x"]->Load("Sample01.x");
+	g_pXFileList["Res/Sample01.x"] = new XFile();
+	g_pXFileList["Res/Sample01.x"]->Load("Res/Sample01.x");
 	
 
-	obj.SetXFileList("Sample01.x");
+	obj.SetXFileList("Res/Sample01.");
 	
 	Drawer obj1(
 		D3DXVECTOR3(0.f, 0.f, 0.f),
 		D3DXVECTOR3(1.f, 1.f, 1.f),
 		D3DXVECTOR3(0.f, 50.f, 0.f),
 		//obj.GetXFileList("Sample01.x")
-		g_pXFileList["Sample01.x"]
+		g_pXFileList["Res/Sample01.x"]
 	);
 
 	while (true)
@@ -145,7 +142,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 		}
 	}
 
-	delete g_pXFileList["Sample01.x"];
+	delete g_pXFileList["Res/Sample01.x"];
 
 	DXManager::DestroyInstance();
 
