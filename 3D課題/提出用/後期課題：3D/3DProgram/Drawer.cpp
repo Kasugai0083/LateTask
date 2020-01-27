@@ -32,7 +32,7 @@ void Drawer::Draw()
 
 	world_matrix *= scale_matrix * trans_matrix * rot_matrix * view_matrix;
 
-	Ins_DXManager->GetStatus().m_D3DDevice->SetTransform(D3DTS_WORLD, &world_matrix);
+	m_DXStatus.m_D3DDevice->SetTransform(D3DTS_WORLD, &world_matrix);
 
 	if(m_pXFile != NULL)
 	{

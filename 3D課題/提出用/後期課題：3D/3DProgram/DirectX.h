@@ -21,7 +21,6 @@ typedef struct _VERTEX
 /**
 * DirextXステータス構造体
 */
-
 struct DXStatus 
 {
 	//! DirectXインターフェース
@@ -54,12 +53,21 @@ public:
 	*/
 	void SetLighting();
 
-	DXStatus GetStatus() {
-		if (!m_DXStatus) {
-			return;
-		}
-		return m_DXStatus;
+	void SendStatus(DXStatus& status_) {
+		status_ = m_DXStatus;
 	}
+
+	// 動かないので保留
+	//DXStatus GetStatus() {
+	//	if (!m_DXStatus.m_D3DDevice 
+	//		|| !m_DXStatus.m_D3DInterface 
+	//		|| !m_DXStatus.m_pD3DPresentParam 
+	//		|| !m_DXStatus.m_TextureList.begin) 
+	//	{
+	//		return;
+	//	}
+	//	return m_DXStatus;
+	//}
 
 protected:
 

@@ -16,6 +16,7 @@ public:
 		m_pXFile(xfile_)
 	{
 		Ins_DXManager = DXManager::GetInstance();
+		Ins_DXManager->SendStatus(m_DXStatus);
 	}
 
 	void Draw();
@@ -24,6 +25,7 @@ private:
 	D3DXVECTOR3 m_Pos, m_Scale, m_Angle;
 
 	DXManager* Ins_DXManager;
+	DXStatus m_DXStatus;
 
 	XFile* m_pXFile;
 };

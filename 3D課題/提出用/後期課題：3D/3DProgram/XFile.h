@@ -15,6 +15,8 @@ public:
 		m_pMeshMaterialList(NULL),
 		m_pTextureList(NULL)
 	{
+		Ins_DXManager = DXManager::GetInstance();
+		Ins_DXManager->SendStatus(m_DXStatus);
 	}
 
 	~XFile();
@@ -34,16 +36,23 @@ public:
 	}
 
 private:
+	// Material
 	DWORD m_MaterialNum;
-	LPD3DXMESH m_pMesh;
 	D3DMATERIAL9* m_pMeshMaterialList;
 
+	// Mesh
+	LPD3DXMESH m_pMesh;
+
+	// Texture
 	LPDIRECT3DTEXTURE9* m_pTextureList;
 	std::map<std::string, LPDIRECT3DTEXTURE9> m_TextureList;
-	
 	std::map<int, std::string> m_TextureNameList;
 
+	// XFile
 	std::map<std::string, XFile*> m_pXFileList;
 
+	// DirectX
+	DXManager* Ins_DXManager;
+	DXStatus m_DXStatus;
 };
 
