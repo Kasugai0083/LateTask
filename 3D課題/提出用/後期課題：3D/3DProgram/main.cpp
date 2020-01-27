@@ -2,7 +2,6 @@
 #include "DirectX.h"
 #include "XFile.h"
 #include "Drawer.h"
-#include "Accesor.h"
 #include <string>
 #include <windows.h>
 #include <d3d9.h>
@@ -95,15 +94,12 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
 	XFile obj;
 
-	std::string objname = "Sample01.x";
-
+	/*
+	g_pXFileList["Sample01.x"] = new XFile();
+	g_pXFileList["Sample01.x"]->Load("Sample01.x");
+	*/
 	obj.SetXFileList("Sample01.x");
 	
-	/*
-		g_pXFileList["Sample01.x"] = new XFile();
-		g_pXFileList["Sample01.x"]->Load("Sample01.x");
-	*/
-
 	Drawer obj1(
 		D3DXVECTOR3(0.f, 0.f, 0.f),
 		D3DXVECTOR3(1.f, 1.f, 1.f),

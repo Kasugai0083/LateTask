@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Accesor.h"
+#include "DirectX.h"
 #include <string>
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -44,5 +44,6 @@ private:
 	std::map<int, std::string> m_TextureNameList;
 
 	std::map<std::string, XFile*> m_pXFileList;
+
 };
 

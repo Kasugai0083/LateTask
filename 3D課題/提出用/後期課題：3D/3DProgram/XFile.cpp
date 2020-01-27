@@ -1,17 +1,12 @@
 #include "XFile.h"
 #include <map>
 
-LPDIRECT3DDEVICE9 test;
-Accesor* s_Accesor = Accesor::GetInstance();
+DXManager* s_DXManager = DXManager::GetInstance();
 
 bool XFile::Load(std::string file_name)
 {
 
 	LPD3DXBUFFER p_material_buffer = NULL;
-
-
-
-	if (!s_Accesor) { return false; }
 
 	/*
 		file_name のデータを LoadMeshFromXA で出力
@@ -25,7 +20,7 @@ bool XFile::Load(std::string file_name)
 	if (FAILED(D3DXLoadMeshFromXA(
 		file_name.c_str(),
 		D3DXMESH_SYSTEMMEM,
-		s_Accesor->GetDXStatus().m_D3DDevice,
+		s_DXManager->GetStatus().m_D3DDevice,
 		NULL,
 		&p_material_buffer,
 		NULL,
@@ -53,7 +48,7 @@ bool XFile::Load(std::string file_name)
 			LPDIRECT3DTEXTURE9 texture = NULL;
 			if(m_TextureList[file_name] == NULL)
 			{
-				D3DXCreateTextureFromFileA(s_Accesor->GetDXStatus().m_D3DDevice,
+				D3DXCreateTextureFromFileA(s_DXManager->GetStatus().m_D3DDevice,
 											file_name.c_str(),
 											&m_TextureList[file_name]);
 			}
@@ -102,9 +97,9 @@ void XFile::Draw()
 {
 	for(DWORD i = 0; i < m_MaterialNum; i++)
 	{
-		s_Accesor->GetDXStatus().m_D3DDevice->SetMaterial(&m_pMeshMaterialList[i]);
+		s_DXManager->GetStatus().m_D3DDevice->SetMaterial(&m_pMeshMaterialList[i]);
 
-		s_Accesor->GetDXStatus().m_D3DDevice->SetTexture(0, m_pTextureList[i]);
+		s_DXManager->GetStatus().m_D3DDevice->SetTexture(0, m_pTextureList[i]);
 
 		m_pMesh->DrawSubset(i);
 	}

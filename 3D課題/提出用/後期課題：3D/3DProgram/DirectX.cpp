@@ -150,9 +150,3 @@ void DXManager::SetLighting() {
 	m_DXStatus.m_D3DDevice->LightEnable(0, true);
 	m_DXStatus.m_D3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 }
-
-//void DXManager::SendStatus(DXStatus* status_)
-//{
-//	if (m_DXStatus.m_D3DDevice == nullptr) { return; }
-//	*status_ = m_DXStatus;
-//}

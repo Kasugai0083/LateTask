@@ -37,6 +37,7 @@ struct DXStatus
 class DXManager : public Singleton<DXManager>
 {
 public:
+
 	bool InitDirectX(HWND window_handle);
 
 	/**
@@ -53,8 +54,12 @@ public:
 	*/
 	void SetLighting();
 
-	DXStatus GetStatus() { return m_DXStatus; }
-	//DXStatus SendStatus(DXStatus* status_);
+	DXStatus GetStatus() {
+		if (!m_DXStatus) {
+			return;
+		}
+		return m_DXStatus;
+	}
 
 protected:
 
