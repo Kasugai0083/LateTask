@@ -1,4 +1,5 @@
 #include "Window.h"
+#include <window.h>
 
 LRESULT CALLBACK WindowProc(HWND window_handle, UINT message_id, WPARAM wparam, LPARAM lparam)
 {

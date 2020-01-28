@@ -2,7 +2,9 @@
 #include "DirectX.h"
 #include "HandMade.h"
 
-void Drawer2D::DrawTexture(float x, float y,float z, std::string file_name_)
+
+
+void Drawer2D::DrawTexture(CustomVertex v_, std::string file_name_)
 {
 	DXManager* Ins_DXManager = DXManager::GetInstance();
 	if (!Ins_DXManager) { return; }
@@ -14,7 +16,7 @@ void Drawer2D::DrawTexture(float x, float y,float z, std::string file_name_)
 
 	HandMadeScaling(&scale,0.01f,0.01f,0.01f);
 
-	D3DXMatrixTranslation(&trans, -5.f, -5.f, 0.f);
+	D3DXMatrixTranslation(&trans, v_.pos.x, v_.pos.y, v_.pos.z);
 
 	HandMadeBillBoard(&world, Ins_DXManager->GetViewMatrix());
 
@@ -28,10 +30,10 @@ void Drawer2D::DrawTexture(float x, float y,float z, std::string file_name_)
 	float bottom_tv = 1.f;
 	
 	if (m_TextureList[file_name_] != nullptr) {
-		left_tu = x / m_TextureList[file_name_]->Width;
-		right_tu =( x + m_TextureList[file_name_]->Width ) / m_TextureList[file_name_]->Width;
-		top_tv = y / m_TextureList[file_name_]->Height;
-		bottom_tv = (y + m_TextureList[file_name_]->Height) / m_TextureList[file_name_]->Height;
+		left_tu = v_.tex_pos.x / m_TextureList[file_name_]->Width;
+		right_tu =(v_.tex_pos.x + m_TextureList[file_name_]->Width ) / m_TextureList[file_name_]->Width;
+		top_tv = v_.tex_pos.y / m_TextureList[file_name_]->Height;
+		bottom_tv = (v_.tex_pos.y + m_TextureList[file_name_]->Height) / m_TextureList[file_name_]->Height;
 	}
 
 	float half_x = m_TextureList[file_name_]->Width / 2.f;
@@ -42,8 +44,8 @@ void Drawer2D::DrawTexture(float x, float y,float z, std::string file_name_)
 		
 		{D3DXVECTOR3(-half_x,half_y, 0.f),D3DXVECTOR2(left_tu, top_tv)},
 		{D3DXVECTOR3(half_x,half_y, 0.f),D3DXVECTOR2(right_tu, top_tv)},
-		{D3DXVECTOR3(half_x,-half_y, 0.f),D3DXVECTOR2(right_tu, bottom_tv)},
-		{D3DXVECTOR3(-half_x,-half_y, 0.f),D3DXVECTOR2(left_tu, bottom_tv)},
+		{D3DXVECTOR3(half_x,-half_y, 0.f),D3DXVECTOR2(right_tu, 0.5f)},
+		{D3DXVECTOR3(-half_x,-half_y, 0.f),D3DXVECTOR2(left_tu, 0.5f)},
 
 	};
 

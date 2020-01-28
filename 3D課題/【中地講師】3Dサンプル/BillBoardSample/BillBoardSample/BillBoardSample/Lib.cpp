@@ -1,4 +1,7 @@
 #include "Lib.h"
+#include <windows.h>
+#include <d3d9.h>
+#include <d3dx9.h>
 
 bool InitDirectX(HINSTANCE instance_handle, HWND window_handle)
 {

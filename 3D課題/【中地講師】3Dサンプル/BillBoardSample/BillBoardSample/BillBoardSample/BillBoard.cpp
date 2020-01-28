@@ -1,6 +1,9 @@
 #include "Lib.h"
 #include "BillBoard.h"
 
+#include <d3d9.h>
+#include <d3dx9.h>
+
 extern int g_TextureList[];
 
 static D3DXVECTOR3 g_BillBoardPos;		// ç¿ïW

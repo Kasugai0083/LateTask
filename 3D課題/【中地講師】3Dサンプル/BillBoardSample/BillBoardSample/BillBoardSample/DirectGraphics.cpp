@@ -1,4 +1,6 @@
 #include "DirectGraphics.h"
+#include <d3d9.h>
+#include <d3dx9.h>
 
 // Ã“Iƒ‰ƒCƒuƒ‰ƒŠ
 #pragma comment(lib, "d3d9.lib")

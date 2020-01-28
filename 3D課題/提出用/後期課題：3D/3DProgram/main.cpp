@@ -59,7 +59,11 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 			"Res/Sample01.x"
 		);
 
-		drawer.DrawTexture(0.f, 0.f, 400.f, "Res/bomb.png");
+		{
+			CustomVertex v{ D3DXVECTOR3(-5.f,-5.f,0.f),D3DXVECTOR2(0.f,0.f) };
+			drawer.DrawTexture(v, "Res/bomb.png");
+
+		}
 
 		s_DXManager->EndDraw();
 		

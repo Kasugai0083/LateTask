@@ -1,6 +1,8 @@
 #include "DirectInput.h"
 #include <Windows.h>
 #include <dinput.h>
+#include <d3d9.h>
+#include <d3dx9.h>
 
 #pragma comment(lib, "dinput8.lib")
 #pragma comment(lib, "dxguid.lib")

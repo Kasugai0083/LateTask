@@ -1,4 +1,5 @@
 #include <time.h>
+#include <window.h>
 #include "Lib.h"
 #include "BillBoard.h"
 #include "Camera.h"
