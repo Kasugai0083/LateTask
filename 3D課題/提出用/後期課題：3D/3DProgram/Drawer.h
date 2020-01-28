@@ -15,18 +15,15 @@ public:
 		m_Angle(angle_),
 		m_pXFile(xfile_)
 	{
-		Ins_DXManager = DXManager::GetInstance();
-		Ins_DXManager->SendStatus(m_DXStatus);
 	}
 
 	void Draw();
 
 private:
+	// オブジェクト情報
 	D3DXVECTOR3 m_Pos, m_Scale, m_Angle;
 
-	DXManager* Ins_DXManager;
-	DXStatus m_DXStatus;
-
+	// 画像情報
 	XFile* m_pXFile;
 };
 

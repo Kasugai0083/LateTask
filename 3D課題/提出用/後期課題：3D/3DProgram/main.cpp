@@ -96,14 +96,10 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 	g_pXFileList["Res/Sample01.x"] = new XFile();
 	g_pXFileList["Res/Sample01.x"]->Load("Res/Sample01.x");
 	
-
-	obj.SetXFileList("Res/Sample01.");
-	
 	Drawer obj1(
 		D3DXVECTOR3(0.f, 0.f, 0.f),
 		D3DXVECTOR3(1.f, 1.f, 1.f),
 		D3DXVECTOR3(0.f, 50.f, 0.f),
-		//obj.GetXFileList("Sample01.x")
 		g_pXFileList["Res/Sample01.x"]
 	);
 
@@ -133,11 +129,7 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 			obj1.Draw();
 
-			//DrawBillBoard();
-
 			s_DXManager->EndDraw();
-
-			//obj.Draw();
 
 		}
 	}

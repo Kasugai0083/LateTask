@@ -4,8 +4,12 @@
 
 extern D3DXMATRIX matView;
 
+
 void Drawer::Draw()
 {
+
+	DXManager* Ins_DXManager = DXManager::GetInstance();
+
 	if (!Ins_DXManager) { return; }
 
 	D3DXMATRIX world_matrix, trans_matrix, rot_matrix, scale_matrix;
@@ -26,13 +30,13 @@ void Drawer::Draw()
 
 	rot_matrix *= rot_matrix_x * rot_matrix_y * rot_matrix_z;
 
-#if 0
+#if 1
 	HandMadeBillBoard(&view_matrix, &matView);
 #endif
 
 	world_matrix *= scale_matrix * trans_matrix * rot_matrix * view_matrix;
 
-	m_DXStatus.m_D3DDevice->SetTransform(D3DTS_WORLD, &world_matrix);
+	Ins_DXManager->GetStatus()->m_D3DDevice->SetTransform(D3DTS_WORLD, &world_matrix);
 
 	if(m_pXFile != NULL)
 	{

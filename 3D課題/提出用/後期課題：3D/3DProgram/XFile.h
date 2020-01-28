@@ -15,8 +15,6 @@ public:
 		m_pMeshMaterialList(NULL),
 		m_pTextureList(NULL)
 	{
-		Ins_DXManager = DXManager::GetInstance();
-		Ins_DXManager->SendStatus(m_DXStatus);
 	}
 
 	~XFile();
@@ -51,8 +49,5 @@ private:
 	// XFile
 	std::map<std::string, XFile*> m_pXFileList;
 
-	// DirectX
-	DXManager* Ins_DXManager;
-	DXStatus m_DXStatus;
 };
 
