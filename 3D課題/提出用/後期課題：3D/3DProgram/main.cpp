@@ -57,8 +57,6 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 		
 	}
 
-	//delete g_pXFileList["Res/Sample01.x"];
-
 	Object.ReleaseXFile();
 
 	DXManager::DestroyInstance();
