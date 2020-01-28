@@ -64,7 +64,7 @@ bool DXManager::InitDirectX(HWND window_handle)
 	return true;
 }
 
-D3DXMATRIX matProj, matView;
+
 
 void DXManager::Transform()
 {
@@ -93,12 +93,12 @@ void DXManager::Transform()
 	camera_pos.z += vec.z;
 	camera_pos.x += vec.x;
 
-	D3DXMatrixIdentity(&matView);
-	D3DXMatrixLookAtLH(&matView, 
+	D3DXMatrixIdentity(&m_MatView);
+	D3DXMatrixLookAtLH(&m_MatView, 
 		&camera_pos,				// カメラ座標
 		&eye_pos,					// 注視点座標
 		&up_vector);				// カメラの上の向きのベクトル
-	m_DXStatus.m_D3DDevice->SetTransform(D3DTS_VIEW, &matView);
+	m_DXStatus.m_D3DDevice->SetTransform(D3DTS_VIEW, &m_MatView);
 	//ビュー座標変換用の行列算出 end
 
 	//射影座標変換用の行列算出 start
@@ -107,12 +107,12 @@ void DXManager::Transform()
 	float aspect = (float)vp.Width / (float)vp.Height;
 
 	D3DXMatrixPerspectiveFovLH(
-		&matProj,
+		&m_MatProj,
 		D3DXToRadian(60),	// 画角
 		aspect,				// アスペクト比
 		0.1f,				// near
 		500.0f);			// far
-	m_DXStatus.m_D3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
+	m_DXStatus.m_D3DDevice->SetTransform(D3DTS_PROJECTION, &m_MatProj);
 	//射影座標変換用の行列算出 end
 }
 

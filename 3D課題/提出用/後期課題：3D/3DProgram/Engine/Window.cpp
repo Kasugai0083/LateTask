@@ -102,7 +102,7 @@ namespace Window{
 			LoadCursor(NULL, IDC_ARROW),						// カーソル画像
 			NULL,												// 背景ブラシ(背景色)
 			NULL,												// メニュー名
-			name_,								// クラス名									
+			name_,												// クラス名									
 			NULL												// 小さいアイコン
 		};
 

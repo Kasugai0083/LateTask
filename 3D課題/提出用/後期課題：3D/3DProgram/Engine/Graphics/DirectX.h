@@ -58,21 +58,16 @@ public:
 		return &m_DXStatus;
 	}
 
-	// “®‚©‚È‚¢‚Ì‚Å•Û—¯
-	//DXStatus GetStatus() {
-	//	if (!m_DXStatus.m_D3DDevice 
-	//		|| !m_DXStatus.m_D3DInterface 
-	//		|| !m_DXStatus.m_pD3DPresentParam 
-	//		|| !m_DXStatus.m_TextureList.begin) 
-	//	{
-	//		return;
-	//	}
-	//	return m_DXStatus;
-	//}
+	D3DXMATRIX* GetViewMatrix() {
+		if (!&m_MatView) { return false; }
+		return &m_MatView;
+	}
 
 protected:
 
 	DXStatus m_DXStatus;
+
+	D3DXMATRIX m_MatProj, m_MatView;
 
 private:
 	friend Singleton<DXManager>;

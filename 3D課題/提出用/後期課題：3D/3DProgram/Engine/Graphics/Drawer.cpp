@@ -2,8 +2,6 @@
 #include "XFile.h"
 #include "HandMade.h"
 
-extern D3DXMATRIX matView;
-
 void Drawer::Draw()
 {
 
@@ -24,8 +22,8 @@ void Drawer::Draw()
 
 	rot_matrix *= rot_matrix_x * rot_matrix_y * rot_matrix_z;
 
-#if 1
-	HandMadeBillBoard(&view_matrix, &matView);
+#if 0
+	HandMadeBillBoard(&view_matrix, Ins_DXManager->GetViewMatrix());
 #endif
 
 	world_matrix *= scale_matrix * trans_matrix * rot_matrix * view_matrix;
