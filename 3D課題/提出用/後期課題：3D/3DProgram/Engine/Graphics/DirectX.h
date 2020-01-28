@@ -1,7 +1,7 @@
 #ifndef DIRECTX_H_
 #define DIRECTX_H_
 
-#include "SingletonTemplate.h"
+#include "../../Utility/SingletonTemplate.h"
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <map>
@@ -54,6 +54,7 @@ public:
 	void SetLighting();
 
 	DXStatus* GetStatus() {
+		if (!&m_DXStatus) { return false; }
 		return &m_DXStatus;
 	}
 

@@ -1,7 +1,7 @@
 
-#include "DirectX.h"
-#include "XFile.h"
-#include "Drawer.h"
+#include "Engine/Graphics/DirectX.h"
+#include "Engine/Graphics/XFile.h"
+#include "Engine/Graphics/Drawer.h"
 #include <string>
 #include <windows.h>
 #include <d3d9.h>
