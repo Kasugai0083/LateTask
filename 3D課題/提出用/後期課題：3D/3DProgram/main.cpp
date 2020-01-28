@@ -29,13 +29,6 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 		MessageBox(NULL, "‰æ‘œ‚Ì“Ç‚Ýž‚Ý‚ÉŽ¸”s", NULL, MB_OK);
 	}
 
-	Object.SetStatus(
-		D3DXVECTOR3(0.f, 0.f, 0.f),
-		D3DXVECTOR3(1.f, 1.f, 1.f),
-		D3DXVECTOR3(20.f, 20.f, 20.f),
-		"Res/Sample01.x"
-	);
-
 
 	while (Window::ProcessMessage())
 	{
@@ -46,7 +39,19 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 		s_DXManager->SetLighting();
 
-		Object.Draw();
+		Object.DrawXFile(
+			D3DXVECTOR3(0.f, 0.f, 0.f),
+			D3DXVECTOR3(1.f, 1.f, 1.f),
+			D3DXVECTOR3(20.f, 20.f, 20.f),
+			"Res/Sample01.x"
+		);
+
+		Object.DrawBillbord(
+			D3DXVECTOR3(5.f, 5.f, 5.f),
+			D3DXVECTOR3(1.f, 1.f, 1.f),
+			D3DXVECTOR3(20.f, 20.f, 20.f),
+			"Res/Sample01.x"
+		);
 
 		s_DXManager->EndDraw();
 		

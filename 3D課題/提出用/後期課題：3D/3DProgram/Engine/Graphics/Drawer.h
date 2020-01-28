@@ -11,16 +11,16 @@ class Drawer
 {
 public:
 
-	void Draw();
-
-	void SetStatus(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_);
+	void DrawXFile(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_);
+	void DrawBillbord(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_);
 
 	bool LoadXFile(std::string name_);
 
 	void ReleaseXFile() {
 		m_pXFileList.clear();
 	}
-
+private:
+	void Trans(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_);
 private:
 	// オブジェクト情報
 	D3DXVECTOR3 m_Pos, m_Scale, m_Angle;
@@ -31,10 +31,7 @@ private:
 
 	D3DXMATRIX view_matrix;
 
-	// 画像情報
-	XFile* m_pXFile;
-
-	// テスト中
+	// 画像情報をリスト化
 	std::map<std::string, XFile*> m_pXFileList;
 };
 

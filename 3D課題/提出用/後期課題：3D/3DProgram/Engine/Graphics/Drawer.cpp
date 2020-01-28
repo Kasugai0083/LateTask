@@ -2,43 +2,56 @@
 #include "XFile.h"
 #include "HandMade.h"
 
-void Drawer::Draw()
+void Drawer::Trans(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_) {
+
+	D3DXMatrixIdentity(&world_matrix);
+	D3DXMatrixIdentity(&rot_matrix);
+	D3DXMatrixIdentity(&view_matrix);
+
+	HandMadeTranslation(&trans_matrix, pos_.x, pos_.y, pos_.z);
+	HandMadeScaling(&scale_matrix, scale_.x, scale_.y, scale_.z);
+
+	HandMadeRotationX(&rot_matrix_x, D3DXToRadian(angle_.x));
+	HandMadeRotationY(&rot_matrix_y, D3DXToRadian(angle_.y));
+	HandMadeRotationZ(&rot_matrix_z, D3DXToRadian(angle_.z));
+
+	rot_matrix *= rot_matrix_x * rot_matrix_y * rot_matrix_z;
+
+}
+
+void Drawer::DrawXFile(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_)
 {
 
 	DXManager* Ins_DXManager = DXManager::GetInstance();
 
 	if (!Ins_DXManager) { return; }
 
-	D3DXMatrixIdentity(&world_matrix);
-	D3DXMatrixIdentity(&rot_matrix);
-	D3DXMatrixIdentity(&view_matrix);
-	
-	HandMadeTranslation(&trans_matrix, m_Pos.x, m_Pos.y, m_Pos.z);
-	HandMadeScaling(&scale_matrix, m_Scale.x, m_Scale.y, m_Scale.z);
-
-	HandMadeRotationX(&rot_matrix_x, D3DXToRadian(m_Angle.x));
-	HandMadeRotationY(&rot_matrix_y, D3DXToRadian(m_Angle.y));
-	HandMadeRotationZ(&rot_matrix_z, D3DXToRadian(m_Angle.z));
-
-	rot_matrix *= rot_matrix_x * rot_matrix_y * rot_matrix_z;
-
-#if 0
-	HandMadeBillBoard(&view_matrix, Ins_DXManager->GetViewMatrix());
-#endif
+	Trans(pos_,scale_,angle_, name_);
 
 	world_matrix *= scale_matrix * trans_matrix * rot_matrix * view_matrix;
 
 	Ins_DXManager->GetStatus()->m_D3DDevice->SetTransform(D3DTS_WORLD, &world_matrix);
 
-	if (m_pXFile) { m_pXFile->Draw(); }
+	if (m_pXFileList[name_]) { m_pXFileList[name_]->Draw(); }
 
 }
 
-void Drawer::SetStatus(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_) {
-	m_Pos = pos_;
-	m_Scale = scale_;
-	m_Angle = angle_;
-	m_pXFile = m_pXFileList[name_];
+void Drawer::DrawBillbord(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_)
+{
+	DXManager* Ins_DXManager = DXManager::GetInstance();
+
+	if (!Ins_DXManager) { return; }
+
+	Trans(pos_, scale_, angle_, name_);
+
+	HandMadeBillBoard(&view_matrix, Ins_DXManager->GetViewMatrix());
+
+	world_matrix *= scale_matrix * trans_matrix * rot_matrix * view_matrix;
+
+	Ins_DXManager->GetStatus()->m_D3DDevice->SetTransform(D3DTS_WORLD, &world_matrix);
+
+	if (m_pXFileList[name_]) { m_pXFileList[name_]->Draw(); }
+
 }
 
 bool Drawer::LoadXFile(std::string name_) {
