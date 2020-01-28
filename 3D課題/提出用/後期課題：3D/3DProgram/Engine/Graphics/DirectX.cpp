@@ -64,8 +64,6 @@ bool DXManager::InitDirectX(HWND window_handle)
 	return true;
 }
 
-
-
 void DXManager::Transform()
 {
 
@@ -73,7 +71,7 @@ void DXManager::Transform()
 
 	static const D3DXVECTOR3 TargetPos(0.f,0.f,0.f);
 
-	test++;
+	//test++;
 
 	float rad = test * 3.14f / 180.f;
 	float distance = 10.0f;
@@ -123,6 +121,12 @@ void DXManager::StartDraw() {
 		D3DCOLOR_ARGB(255, 0, 0, 255),
 		1.0f,	// Zバッファの初期値
 		0);		// ステンシルバッファの初期値
+
+	m_DXStatus.m_D3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+	m_DXStatus.m_D3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	m_DXStatus.m_D3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	m_DXStatus.m_D3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 	m_DXStatus.m_D3DDevice->BeginScene();
 }

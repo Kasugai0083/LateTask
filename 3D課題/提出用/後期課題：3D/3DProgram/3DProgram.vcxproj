@@ -79,20 +79,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Graphics\Drawer2D.cpp" />
     <ClCompile Include="Engine\Graphics\DirectX.cpp" />
-    <ClCompile Include="Engine\Graphics\Drawer.cpp" />
+    <ClCompile Include="Engine\Graphics\XFileDrawer.cpp" />
     <ClCompile Include="Engine\Graphics\HandMade.cpp" />
     <ClCompile Include="Engine\Window.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Graphics\XFile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Graphics\Drawer2D.h" />
     <ClInclude Include="Engine\Graphics\DirectX.h" />
-    <ClInclude Include="Engine\Graphics\Drawer.h" />
+    <ClInclude Include="Engine\Graphics\XFileDrawer.h" />
     <ClInclude Include="Engine\Graphics\HandMade.h" />
     <ClInclude Include="Engine\Window.h" />
     <ClInclude Include="Utility\SingletonTemplate.h" />
     <ClInclude Include="Engine\Graphics\XFile.h" />
+    <ClInclude Include="Utility\Size.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

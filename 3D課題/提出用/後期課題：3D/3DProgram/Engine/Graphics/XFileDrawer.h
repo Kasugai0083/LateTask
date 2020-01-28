@@ -7,14 +7,14 @@
 
 class XFile;
 
-class Drawer
+class XFileDrawer
 {
 public:
 
-	void DrawXFile(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_);
+	void Draw(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_);
 	void DrawBillbord(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_);
 
-	bool LoadXFile(std::string name_);
+	bool Load(std::string name_);
 
 	void ReleaseXFile() {
 		m_pXFileList.clear();

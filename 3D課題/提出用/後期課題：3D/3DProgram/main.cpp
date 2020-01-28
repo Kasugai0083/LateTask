@@ -1,8 +1,9 @@
 
 #include "Engine/Graphics/DirectX.h"
 #include "Engine/Graphics/XFile.h"
-#include "Engine/Graphics/Drawer.h"
+#include "Engine/Graphics/XFileDrawer.h"
 #include "Engine/Window.h"
+#include "Engine/Graphics/Drawer2D.h"
 #include <string>
 #include <windows.h>
 #include <d3d9.h>
@@ -23,12 +24,17 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 		MessageBox(NULL,"ƒEƒBƒ“ƒhƒEì¬Ž¸”s",NULL, MB_OK);
 	}
 
-	Drawer Object;
+	XFileDrawer Object;
 
-	if(!Object.LoadXFile("Res/Sample01.x")){
+	if(!Object.Load("Res/Sample01.x")){
 		MessageBox(NULL, "‰æ‘œ‚Ì“Ç‚Ýž‚Ý‚ÉŽ¸”s", NULL, MB_OK);
 	}
 
+	Drawer2D drawer;
+
+	if (!drawer.CreateTexture("Res/bomb.png")) {
+		MessageBox(NULL, "‰æ‘œ‚Ì“Ç‚Ýž‚Ý‚ÉŽ¸”s", NULL, MB_OK);
+	}
 
 	while (Window::ProcessMessage())
 	{
@@ -39,7 +45,7 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 		s_DXManager->SetLighting();
 
-		Object.DrawXFile(
+		Object.Draw(
 			D3DXVECTOR3(0.f, 0.f, 0.f),
 			D3DXVECTOR3(1.f, 1.f, 1.f),
 			D3DXVECTOR3(20.f, 20.f, 20.f),
@@ -52,6 +58,8 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 			D3DXVECTOR3(20.f, 20.f, 20.f),
 			"Res/Sample01.x"
 		);
+
+		drawer.DrawTexture(0.f, 0.f, 400.f, "Res/bomb.png");
 
 		s_DXManager->EndDraw();
 		
