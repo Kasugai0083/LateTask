@@ -82,6 +82,7 @@
     <ClCompile Include="Engine\Graphics\DirectX.cpp" />
     <ClCompile Include="Engine\Graphics\Drawer.cpp" />
     <ClCompile Include="Engine\Graphics\HandMade.cpp" />
+    <ClCompile Include="Engine\Window.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Graphics\XFile.cpp" />
   </ItemGroup>
@@ -89,6 +90,7 @@
     <ClInclude Include="Engine\Graphics\DirectX.h" />
     <ClInclude Include="Engine\Graphics\Drawer.h" />
     <ClInclude Include="Engine\Graphics\HandMade.h" />
+    <ClInclude Include="Engine\Window.h" />
     <ClInclude Include="Utility\SingletonTemplate.h" />
     <ClInclude Include="Engine\Graphics\XFile.h" />
   </ItemGroup>

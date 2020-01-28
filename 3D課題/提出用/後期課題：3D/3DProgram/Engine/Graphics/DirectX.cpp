@@ -1,6 +1,6 @@
-#include <Windows.h>
 #include "DirectX.h"
 #include "HandMade.h"
+#include <Windows.h>
 
 bool DXManager::InitDirectX(HWND window_handle)
 {
