@@ -9,16 +9,8 @@ bool XFile::Load(std::string file_name)
 	if (!Ins_DXManager) { return false; }
 
 	LPD3DXBUFFER p_material_buffer = NULL;
-
-	/*
-		file_name のデータを LoadMeshFromXA で出力
-		
-		p_material_buffer,
-		m_MaterialNum,
-		m_pMesh,
-
-		に値を入力
-	*/
+	
+	// メッシュ読み込み
 	if (FAILED(D3DXLoadMeshFromXA(
 		file_name.c_str(),
 		D3DXMESH_SYSTEMMEM,

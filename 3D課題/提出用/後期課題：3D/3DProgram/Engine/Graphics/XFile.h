@@ -29,10 +29,6 @@ public:
 
 	}
 
-	XFile* GetXFileList(std::string string_) {
-		return m_pXFileList[string_];
-	}
-
 private:
 	// Material
 	DWORD m_MaterialNum;

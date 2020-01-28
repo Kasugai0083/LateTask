@@ -23,19 +23,19 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 		MessageBox(NULL,"ウィンドウ作成失敗",NULL, MB_OK);
 	}
 
-	XFile obj;
+	Drawer Object;
 
-	std::map<std::string, XFile*>g_pXFileList;
-	
-	g_pXFileList["Res/Sample01.x"] = new XFile();
-	g_pXFileList["Res/Sample01.x"]->Load("Res/Sample01.x");
-	
-	Drawer obj1(
+	if(!Object.LoadXFile("Res/Sample01.x")){
+		MessageBox(NULL, "画像の読み込みに失敗", NULL, MB_OK);
+	}
+
+	Object.SetStatus(
 		D3DXVECTOR3(0.f, 0.f, 0.f),
 		D3DXVECTOR3(1.f, 1.f, 1.f),
-		D3DXVECTOR3(0.f, 50.f, 0.f),
-		g_pXFileList["Res/Sample01.x"]
+		D3DXVECTOR3(20.f, 20.f, 20.f),
+		"Res/Sample01.x"
 	);
+
 
 	while (Window::ProcessMessage())
 	{
@@ -46,13 +46,15 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 		s_DXManager->SetLighting();
 
-		obj1.Draw();
+		Object.Draw();
 
 		s_DXManager->EndDraw();
 		
 	}
 
-	delete g_pXFileList["Res/Sample01.x"];
+	//delete g_pXFileList["Res/Sample01.x"];
+
+	Object.ReleaseXFile();
 
 	DXManager::DestroyInstance();
 
