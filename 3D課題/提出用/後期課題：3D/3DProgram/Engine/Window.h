@@ -2,6 +2,11 @@
 
 #include <windows.h>
 
-LRESULT CALLBACK WindowProc(HWND window_handle, UINT message_id, WPARAM wparam, LPARAM lparam);
+namespace Window{
+	
+	// ウィンドウを作成する
+	bool MakeWindow(float x_, float y_, char* name_);
 
-bool MakeWindow();
+	// メッセージ処理
+	bool ProcessMessage();
+}

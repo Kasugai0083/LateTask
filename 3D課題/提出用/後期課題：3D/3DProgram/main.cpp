@@ -13,23 +13,13 @@
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
 
-//extern LPDIRECT3D9 g_pD3DInterface;	// DirectXインターフェース
-//extern D3DPRESENT_PARAMETERS *g_pD3DPresentParam;
-//extern LPDIRECT3DDEVICE9 g_pD3DDevice;
-//extern std::map<std::string, XFile*>g_pXFileList;
-
-
-
-
 int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 {
-
-
 	//DirectXシングルトン作成
 	DXManager::CreateInstance();
 	DXManager* s_DXManager = DXManager::GetInstance();
 
-	if (!MakeWindow()) {
+	if (!Window::MakeWindow(600.f,600.f,"後期課題：エンジンテスト")) {
 		MessageBox(NULL,"ウィンドウ作成失敗",NULL, MB_OK);
 	}
 
@@ -47,35 +37,19 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 		g_pXFileList["Res/Sample01.x"]
 	);
 
-	while (true)
+	while (Window::ProcessMessage())
 	{
-		bool message_ret = false;
-		MSG msg;
 
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-		{
-			if (msg.message == WM_QUIT)
-			{
-				break;
-			}
-			else {
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
-			}
-		}
-		else {
+		s_DXManager->StartDraw();
 
-			s_DXManager->StartDraw();
+		s_DXManager->Transform();
 
-			s_DXManager->Transform();
+		s_DXManager->SetLighting();
 
-			s_DXManager->SetLighting();
+		obj1.Draw();
 
-			obj1.Draw();
-
-			s_DXManager->EndDraw();
-
-		}
+		s_DXManager->EndDraw();
+		
 	}
 
 	delete g_pXFileList["Res/Sample01.x"];
