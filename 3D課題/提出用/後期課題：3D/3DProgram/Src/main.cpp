@@ -39,7 +39,7 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 	}
 
 	Slider slider1(-5.f, 5.f, 0.f,Direction::LeftToRight);
-	Slider slider2(-5.f, 2.5f, 0.f,Direction::RightToLeft);
+	Slider slider2(-20.f, 2.5f, 0.f,Direction::RightToLeft);
 
 	while (Window::ProcessMessage())
 	{

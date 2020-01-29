@@ -2,7 +2,7 @@
 #include "XFile.h"
 #include "HandMade.h"
 
-void XFileDrawer::Trans(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_) {
+void XFileDrawer::Trans(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_) {
 
 	D3DXMatrixIdentity(&world_matrix);
 	D3DXMatrixIdentity(&rot_matrix);
@@ -26,7 +26,7 @@ void XFileDrawer::Draw(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_,
 
 	if (!Ins_DXManager) { return; }
 
-	Trans(pos_,scale_,angle_, name_);
+	Trans(pos_,scale_,angle_);
 
 	world_matrix *= scale_matrix * trans_matrix * rot_matrix * view_matrix;
 
@@ -42,7 +42,7 @@ void XFileDrawer::DrawBillbord(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3
 
 	if (!Ins_DXManager) { return; }
 
-	Trans(pos_, scale_, angle_, name_);
+	Trans(pos_, scale_, angle_);
 
 	HandMadeBillBoard(&view_matrix, Ins_DXManager->GetViewMatrix());
 

@@ -1,8 +1,8 @@
 #include "Slider.h"
+#include "DirectX.h"
 #include <math.h>
 #include <Windows.h>
 #include <string>
-
 
 void Slider::UpdateNextSliderValue(bool plus_) {
 	// 値を更新する
@@ -52,7 +52,7 @@ void Slider::Update() {
 void ReverseMove(float rate, float size, float& out_pos, float& out_tex_pos, float& out_size)
 {
 	// 比率から描画開始位置をずらす
-	out_pos = (out_pos + size) - (size * rate);
+	out_pos = 0.f;
 
 	// サイズも比率で変更する
 	out_size *= rate;
@@ -108,6 +108,22 @@ void Slider::DrawSlider(std::string file_name_)
 	//	ReverseMove(rate, tex_height, pos_y, tex_y, tex_height);
 	//}
 
+// 中本'sコード
+#if 0
+	D3DXMATRIX world, trans;
+
+	D3DXMatrixIdentity(&world);
+	D3DXMatrixIdentity(&trans);
+
+	D3DXMatrixTranslation(&trans, pos_x, pos_y, pos_z);
+
+	world = trans;
+
+	DXManager* Ins = DXManager::GetInstance();
+
+	Ins->GetStatus()->m_D3DDevice->SetTransform(D3DTS_WORLD, &world);
+
+#endif
 	CustomVertex a{ D3DXVECTOR3(pos_x, pos_y, pos_z), D3DXVECTOR2(tex_x,tex_y) };
 
 	InsDrawer.DrawTexture(a, file_name_, tex_width, tex_height);

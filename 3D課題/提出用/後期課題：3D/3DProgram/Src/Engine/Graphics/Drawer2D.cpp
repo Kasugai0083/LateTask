@@ -8,10 +8,11 @@ void Drawer2D::DrawSetting(float x_, float y_, float z_, std::string file_name_)
 	if (!Ins_DXManager) { return; }
 
 	// ƒ[ƒ‹ƒh, ˆÚ“®, Šgks—ñ‚ğ—pˆÓ
-	D3DXMATRIXA16 world, trans, scale;
+	D3DXMATRIXA16 world, trans, scale, rot;
 	D3DXMatrixIdentity(&world);
 	D3DXMatrixIdentity(&trans);
 	D3DXMatrixIdentity(&scale);
+	D3DXMatrixIdentity(&rot);
 
 	// Šgk
 	HandMadeScaling(&scale, 0.01f, 0.01f, 0.01f);
@@ -23,7 +24,7 @@ void Drawer2D::DrawSetting(float x_, float y_, float z_, std::string file_name_)
 	HandMadeBillBoard(&world, Ins_DXManager->GetViewMatrix());
 
 	// Šgk‚ÆˆÚ“®s—ñ‚ğ”½‰f
-	world *= scale * trans;
+	world *= scale * trans * rot;
 	Ins_DXManager->GetStatus()->m_D3DDevice->SetTransform(D3DTS_WORLD, &world);
 
 	// ƒ‰ƒCƒeƒBƒ“ƒO
@@ -58,77 +59,14 @@ void Drawer2D::DrawTexture(CustomVertex v_, std::string file_name_, float tu, fl
 
 	CustomVertex v[] =
 	{
-		{ D3DXVECTOR3(v_.tex_pos.x, v_.tex_pos.y + tv, 0.0f), D3DXVECTOR2(left_tu, top_tv) },
-		{ D3DXVECTOR3(v_.tex_pos.x + tu, v_.tex_pos.y + tv, 0.0f), D3DXVECTOR2(right_tu, top_tv) },
-		{ D3DXVECTOR3(v_.tex_pos.x + tu, v_.tex_pos.y, 0.0f), D3DXVECTOR2(right_tu, bottom_tv) },
+		{ D3DXVECTOR3(v_.tex_pos.x, v_.tex_pos.y + tv, 0.0f), D3DXVECTOR2(left_tu, top_tv) },		// ¶ã
+		{ D3DXVECTOR3(v_.tex_pos.x + tu, v_.tex_pos.y + tv, 0.0f), D3DXVECTOR2(right_tu, top_tv) }, // ‰Eã
+		{ D3DXVECTOR3(v_.tex_pos.x + tu, v_.tex_pos.y, 0.0f), D3DXVECTOR2(right_tu, bottom_tv) },	// ‰E‰º
 		{ D3DXVECTOR3(v_.tex_pos.x, v_.tex_pos.y, 0.0f), D3DXVECTOR2(left_tu, bottom_tv) },
 	};
 
-
-	//float half_x = m_TextureList[file_name_]->Width / 2.f;
-	//float half_y = m_TextureList[file_name_]->Height / 2.f;
-	//
-	//CustomVertex v[4] =
-	//{
-	//	
-	//	{D3DXVECTOR3(-half_x,half_y, 0.f),D3DXVECTOR2(left_tu, top_tv)},
-	//	{D3DXVECTOR3(half_x,half_y, 0.f),D3DXVECTOR2(right_tu, top_tv)},
-	//	{D3DXVECTOR3(half_x,-half_y, 0.f),D3DXVECTOR2(right_tu, bottom_tv)},
-	//	{D3DXVECTOR3(-half_x,-half_y, 0.f),D3DXVECTOR2(left_tu, bottom_tv)},
-	//
-	//};
-
 	Ins_DXManager->GetStatus()->m_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, v, sizeof(CustomVertex));
 }
-
-
-//void DrawSlider(Slider& slider_, std::string file_name_) 
-//{
-//
-//	float pos_x = slider_;
-//	float pos_y = slider_;
-//	float tex_x = 0.0f;
-//	float tex_y = 0.0f;
-//	float tex_width = tex_data->Width;
-//	float tex_height = tex_data->Height;
-//
-//	// Œ»ó‚Ì’l‚ğ”ä—¦‚Æ‚µ‚ÄZo‚·‚é
-//	float rate = (slider.CurrentValue - slider.MinValue) / (slider.MaxValue - slider.MinValue);
-//
-//	tex_width *= rate;
-//
-//	//// Šeis•ûŒü‚É‚æ‚éˆ—‚ğÀ‘•‚·‚é
-//	//if (slider.Dir == Direction::LeftToRight)
-//	//{
-//	//	// ‰¡•‚É”ä—¦‚ğŠ|‚¯‚ÄƒTƒCƒY‚ğ’²®‚·‚é
-//	//	tex_width *= rate;
-//	//}
-//	//else if (slider.Dir == Direction::RightToLeft)
-//	//{
-//	//	// Å¬ => Å‘å‚Ì•ûŒü‚ÆX²‚ÌÅ¬ => Å‘å‚ª‹t‚È‚Ì‚Å”½“]‚³‚¹‚é
-//	//	ReverseMove(rate, tex_width, pos_x, tex_x, tex_width);
-//	//}
-//	//else if (slider.Dir == Direction::UpToDown)
-//	//{
-//	//	// c•‚É”ä—¦‚ğŠ|‚¯‚ÄƒTƒCƒY‚ğ’²®‚·‚é
-//	//	tex_height *= rate;
-//	//}
-//	//else if (slider.Dir == Direction::DownToUp)
-//	//{
-//	//	// Å¬ => Å‘å‚Ì•ûŒü‚ÆY²‚ÌÅ¬ => Å‘å‚ª‹t‚È‚Ì‚Å”½“]‚³‚¹‚é
-//	//	ReverseMove(rate, tex_height, pos_y, tex_y, tex_height);
-//	//}
-//
-//	DrawUVMappingTexture(
-//		pos_x,
-//		pos_y,
-//		tex_data,
-//		tex_x,
-//		tex_y,
-//		tex_width,
-//		tex_height
-//	);
-//}
 
 bool Drawer2D::CreateTexture(std::string file_name_)
 {

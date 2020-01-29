@@ -21,7 +21,7 @@ public:
 	}
 
 private:
-	void Trans(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_);
+	void Trans(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_);
 private:
 	// オブジェクト情報
 	D3DXVECTOR3 m_Pos, m_Scale, m_Angle;
