@@ -4,6 +4,8 @@
 #include "Engine/Graphics/XFileDrawer.h"
 #include "Engine/Window.h"
 #include "Engine/Graphics/Drawer2D.h"
+#include "Engine/Graphics/Slider.h"
+
 #include <string>
 #include <windows.h>
 #include <d3d9.h>
@@ -36,6 +38,8 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 		MessageBox(NULL, "‰æ‘œ‚Ì“Ç‚Ýž‚Ý‚ÉŽ¸”s2", NULL, MB_OK);
 	}
 
+	Slider slider(-5.f, 5.f, 0.f);
+
 	while (Window::ProcessMessage())
 	{
 
@@ -67,8 +71,23 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 		// ”Âƒ|ƒŠ‚Ì•`‰æ(¶‰º)
 		{
 			CustomVertex v{ D3DXVECTOR3(-5.f,-5.f,0.f),D3DXVECTOR2(0.f,0.f) };
-			drawer.DrawTexture(v, "Res/bomb.png");
+			drawer.DrawTexture(v, "Res/bomb.png",256.f, 256.f);
 		}
+
+		slider.UpdateSliderCurrentValue();
+
+		static int count = 0;
+		count++;
+		if (count % 120 == 0)
+		{
+			slider.UpdateNextSliderValue(true);
+		}
+		else if (count % 60 == 0)
+		{
+			slider.UpdateNextSliderValue(false);
+		}
+
+		slider.DrawSlider("Res/Slider01.png");
 
 		s_DXManager->EndDraw();
 		

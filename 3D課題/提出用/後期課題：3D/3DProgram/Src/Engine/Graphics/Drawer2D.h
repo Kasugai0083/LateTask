@@ -23,16 +23,18 @@ class Drawer2D
 {
 public:
 
-	void DrawTexture(CustomVertex v_, std::string file_name_);
+	void DrawTexture(CustomVertex v_, std::string file_name_, float tu, float tv);
 
-	//bool CreateTexture(const char* file_name_);
 	bool CreateTexture(std::string file_name_);
 
-	void DrawSlider();
+	//void DrawSlider(Slider& slider_, std::string file_name_);
+
+	Texture* GetTexture(std::string file_name_) { return m_TextureList[file_name_]; }
 
 private:
-	void DrawSetting(CustomVertex v_, std::string file_name_);
+	void DrawSetting(float x_, float y_, float z_, std::string file_name_);
 private:
+
 	std::map<std::string, Texture*>m_TextureList;
 
 };
