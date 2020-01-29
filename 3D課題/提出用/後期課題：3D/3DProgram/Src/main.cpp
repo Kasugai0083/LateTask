@@ -38,7 +38,8 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 		MessageBox(NULL, "‰æ‘œ‚Ì“Ç‚Ýž‚Ý‚ÉŽ¸”s2", NULL, MB_OK);
 	}
 
-	Slider slider(-5.f, 5.f, 0.f);
+	Slider slider1(-5.f, 5.f, 0.f,Direction::LeftToRight);
+	Slider slider2(-5.f, 2.5f, 0.f,Direction::RightToLeft);
 
 	while (Window::ProcessMessage())
 	{
@@ -74,20 +75,11 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 			drawer.DrawTexture(v, "Res/bomb.png",256.f, 256.f);
 		}
 
-		slider.UpdateSliderCurrentValue();
+		slider1.Update();
+		slider2.Update();
 
-		static int count = 0;
-		count++;
-		if (count % 120 == 0)
-		{
-			slider.UpdateNextSliderValue(true);
-		}
-		else if (count % 60 == 0)
-		{
-			slider.UpdateNextSliderValue(false);
-		}
-
-		slider.DrawSlider("Res/Slider01.png");
+		slider1.DrawSlider("Res/Slider01.png");
+		slider2.DrawSlider("Res/Slider01.png");
 
 		s_DXManager->EndDraw();
 		

@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include <string>
 
+
 void Slider::UpdateNextSliderValue(bool plus_) {
 	// 値を更新する
 	if (plus_) {
@@ -32,6 +33,34 @@ void Slider::UpdateSliderCurrentValue() {
 	}
 }
 
+void Slider::Update() {
+
+	count++;
+	UpdateSliderCurrentValue();
+
+	if (count % 120 == 0)
+	{
+		UpdateNextSliderValue(true);
+	}
+	else if (count % 60 == 0)
+	{
+		UpdateNextSliderValue(false);
+	}
+
+}
+
+void ReverseMove(float rate, float size, float& out_pos, float& out_tex_pos, float& out_size)
+{
+	// 比率から描画開始位置をずらす
+	out_pos = (out_pos + size) - (size * rate);
+
+	// サイズも比率で変更する
+	out_size *= rate;
+
+	// テクスチャの座標も比率の分だけずらす
+	out_tex_pos += (1.0f - rate) * size;
+}
+
 void Slider::DrawSlider(std::string file_name_)
 {
 
@@ -48,7 +77,14 @@ void Slider::DrawSlider(std::string file_name_)
 	// 現状の値を比率として算出する
 	float rate = (CurrentValue - MinValue) / (MaxValue - MinValue);
 
-	tex_width *= rate;
+	if (Dir == Direction::LeftToRight) {
+		tex_width *= rate;
+	}
+	else if (Dir == Direction::RightToLeft) {
+		//tex_width *= rate;
+		ReverseMove(rate, tex_width, pos_x, tex_x, tex_width);
+	}
+
 
 	//// 各進行方向による処理を実装する
 	//if (slider.Dir == Direction::LeftToRight)

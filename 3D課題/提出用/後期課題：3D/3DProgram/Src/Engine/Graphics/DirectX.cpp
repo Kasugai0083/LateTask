@@ -74,7 +74,7 @@ void DXManager::Transform()
 	//test++;
 
 	float rad = test * 3.14f / 180.f;
-	float distance = 10.0f;
+	float distance = 100.0f;
 	D3DXVECTOR3 vec = D3DXVECTOR3(
 		sinf(rad) * distance,
 		0.0f,
@@ -84,7 +84,7 @@ void DXManager::Transform()
 
 
 	//ビュー座標変換用の行列算出 start
-	D3DXVECTOR3 camera_pos(0.f, 0.f, -5.f); // カメラ位置
+	D3DXVECTOR3 camera_pos(0.f, 0.f, -15.f); // カメラ位置
 	D3DXVECTOR3 eye_pos(0.0f, 0.0f, 0.0f);		// 注視点
 	D3DXVECTOR3 up_vector(0.0f, 1.0f, 0.0f);	// カメラの向き
 
@@ -109,7 +109,7 @@ void DXManager::Transform()
 		D3DXToRadian(60),	// 画角
 		aspect,				// アスペクト比
 		0.1f,				// near
-		500.0f);			// far
+		1000.0f);			// far
 	m_DXStatus.m_D3DDevice->SetTransform(D3DTS_PROJECTION, &m_MatProj);
 	//射影座標変換用の行列算出 end
 }
