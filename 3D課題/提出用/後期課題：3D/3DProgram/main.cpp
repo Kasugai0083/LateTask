@@ -45,6 +45,8 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 		s_DXManager->SetLighting();
 
+
+		// XFileÇÃï`âÊ(ê≥ñ )
 		Object.Draw(
 			D3DXVECTOR3(0.f, 0.f, 0.f),
 			D3DXVECTOR3(1.f, 1.f, 1.f),
@@ -52,6 +54,8 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 			"Res/Sample01.x"
 		);
 
+
+		// XFileÇÃï`âÊ(âEè„)
 		Object.DrawBillbord(
 			D3DXVECTOR3(5.f, 5.f, 5.f),
 			D3DXVECTOR3(1.f, 1.f, 1.f),
@@ -59,7 +63,10 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 			"Res/Sample01.x"
 		);
 
+
+		// î¬É|ÉäÇÃï`âÊ(ç∂â∫)
 		{
+
 			CustomVertex v{ D3DXVECTOR3(-5.f,-5.f,0.f),D3DXVECTOR2(0.f,0.f) };
 			drawer.DrawTexture(v, "Res/bomb.png");
 

@@ -28,8 +28,11 @@ public:
 	//bool CreateTexture(const char* file_name_);
 	bool CreateTexture(std::string file_name_);
 
-private:
+	void DrawSlider();
 
+private:
+	void DrawSetting(CustomVertex v_, std::string file_name_);
+private:
 	std::map<std::string, Texture*>m_TextureList;
 
 };

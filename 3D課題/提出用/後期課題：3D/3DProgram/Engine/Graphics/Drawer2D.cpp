@@ -2,10 +2,8 @@
 #include "DirectX.h"
 #include "HandMade.h"
 
+void Drawer2D::DrawSetting(CustomVertex v_, std::string file_name_) {
 
-
-void Drawer2D::DrawTexture(CustomVertex v_, std::string file_name_)
-{
 	DXManager* Ins_DXManager = DXManager::GetInstance();
 	if (!Ins_DXManager) { return; }
 
@@ -14,7 +12,7 @@ void Drawer2D::DrawTexture(CustomVertex v_, std::string file_name_)
 	D3DXMatrixIdentity(&trans);
 	D3DXMatrixIdentity(&scale);
 
-	HandMadeScaling(&scale,0.01f,0.01f,0.01f);
+	HandMadeScaling(&scale, 0.01f, 0.01f, 0.01f);
 
 	D3DXMatrixTranslation(&trans, v_.pos.x, v_.pos.y, v_.pos.z);
 
@@ -23,6 +21,24 @@ void Drawer2D::DrawTexture(CustomVertex v_, std::string file_name_)
 	world *= scale * trans;
 
 	Ins_DXManager->GetStatus()->m_D3DDevice->SetTransform(D3DTS_WORLD, &world);
+
+	// 頂点構造の指定
+	Ins_DXManager->GetStatus()->m_D3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);	// RHWで無い頂点はLIGHTが効くので無効にしておく
+
+	Ins_DXManager->GetStatus()->m_D3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
+	Ins_DXManager->GetStatus()->m_D3DDevice->SetFVF(D3DFVF_XYZ | D3DFVF_TEX1);
+
+	Ins_DXManager->GetStatus()->m_D3DDevice->SetTexture(0, m_TextureList[file_name_]->TexutreData);
+
+}
+
+void Drawer2D::DrawTexture(CustomVertex v_, std::string file_name_)
+{
+	DXManager* Ins_DXManager = DXManager::GetInstance();
+	if (!Ins_DXManager) { return; }
+
+	DrawSetting(v_, file_name_);
 
 	float left_tu = 0.f;
 	float right_tu = 1.f;
@@ -44,22 +60,12 @@ void Drawer2D::DrawTexture(CustomVertex v_, std::string file_name_)
 		
 		{D3DXVECTOR3(-half_x,half_y, 0.f),D3DXVECTOR2(left_tu, top_tv)},
 		{D3DXVECTOR3(half_x,half_y, 0.f),D3DXVECTOR2(right_tu, top_tv)},
-		{D3DXVECTOR3(half_x,-half_y, 0.f),D3DXVECTOR2(right_tu, 0.5f)},
-		{D3DXVECTOR3(-half_x,-half_y, 0.f),D3DXVECTOR2(left_tu, 0.5f)},
+		{D3DXVECTOR3(half_x,-half_y, 0.f),D3DXVECTOR2(right_tu, bottom_tv)},
+		{D3DXVECTOR3(-half_x,-half_y, 0.f),D3DXVECTOR2(left_tu, bottom_tv)},
 
 	};
 
-	// 頂点構造の指定
-	Ins_DXManager->GetStatus()->m_D3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);	// RHWで無い頂点はLIGHTが効くので無効にしておく
-
-	Ins_DXManager->GetStatus()->m_D3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-	Ins_DXManager->GetStatus()->m_D3DDevice->SetFVF(D3DFVF_XYZ | D3DFVF_TEX1);
-
-	Ins_DXManager->GetStatus()->m_D3DDevice->SetTexture(0, m_TextureList[file_name_]->TexutreData);
-
 	Ins_DXManager->GetStatus()->m_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, v, sizeof(CustomVertex));
-
 }
 
 
