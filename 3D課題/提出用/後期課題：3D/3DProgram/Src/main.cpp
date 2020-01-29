@@ -27,13 +27,13 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 	XFileDrawer Object;
 
 	if(!Object.Load("Res/Sample01.x")){
-		MessageBox(NULL, "‰æ‘œ‚Ì“Ç‚Ýž‚Ý‚ÉŽ¸”s", NULL, MB_OK);
+		MessageBox(NULL, "‰æ‘œ‚Ì“Ç‚Ýž‚Ý‚ÉŽ¸”s1", NULL, MB_OK);
 	}
 
 	Drawer2D drawer;
 
 	if (!drawer.CreateTexture("Res/bomb.png")) {
-		MessageBox(NULL, "‰æ‘œ‚Ì“Ç‚Ýž‚Ý‚ÉŽ¸”s", NULL, MB_OK);
+		MessageBox(NULL, "‰æ‘œ‚Ì“Ç‚Ýž‚Ý‚ÉŽ¸”s2", NULL, MB_OK);
 	}
 
 	while (Window::ProcessMessage())
@@ -66,10 +66,8 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 		// ”Âƒ|ƒŠ‚Ì•`‰æ(¶‰º)
 		{
-
 			CustomVertex v{ D3DXVECTOR3(-5.f,-5.f,0.f),D3DXVECTOR2(0.f,0.f) };
 			drawer.DrawTexture(v, "Res/bomb.png");
-
 		}
 
 		s_DXManager->EndDraw();
