@@ -49,7 +49,7 @@ public:
 		m_LineManager.m_Line.clear();
 		m_LineManager.m_Start = start;
 		m_LineManager.m_End = end;
-		m_LineManager.m_Center = Vec3(5, 5, 5);
+		m_LineManager.m_Center = Vec3(0.f, 0.f, 0.f);
 		m_LineManager.m_Timer = 0;
 
 		Line line =

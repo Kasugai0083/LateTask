@@ -43,8 +43,8 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 	Slider slider2(-20.f, 2.5f, 0.f,Direction::RightToLeft);
 
 	// ã»ê¸ÇÃï`âÊ
-	Vec3 test(0.f, 0.f, 0.f);
-	Vec3 test2(5.f, 5.f, 5.f);
+	Vec3 test(3.f, 0.f, 0.f);
+	Vec3 test2(10.f, 5.f, 0.f);
 
 	LineDrawer Gridman(test, test2);
 
