@@ -95,7 +95,7 @@ void Drawer2D::DrawLine(std::vector<LineDesc> desc_list)
 
 	std::vector<LineVertex> vertex_list;
 
-	for (int i = 0; i < desc_list.size(); i++)
+	for (int i = 0; i < (int)desc_list.size(); i++)
 	{
 		float tu = 0.0f;
 		float tv = 0.0f;

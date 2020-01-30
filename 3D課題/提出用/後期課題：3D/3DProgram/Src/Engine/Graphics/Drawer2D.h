@@ -11,8 +11,8 @@ class LineDesc;
 
 struct Texture{
 	LPDIRECT3DTEXTURE9 TexutreData;	//!< テクスチャデータ
-	int Width;						//!< 横幅
-	int Height;						//!< 縦幅
+	float Width;						//!< 横幅
+	float Height;						//!< 縦幅
 };
 
 struct CustomVertex {

@@ -54,7 +54,7 @@ void LineDrawer::DrawLine() {
 
 	std::vector<LineDesc> desc_list;
 
-	for (int i = 0; i < m_LineManager.m_Line.size() - 1; i++)
+	for (int i = 0; i < (int)m_LineManager.m_Line.size() - 1; i++)
 	{
 		Vec3 direction = Vec3(
 			m_LineManager.m_Line[i + 1].m_Pos.X - m_LineManager.m_Line[i].m_Pos.X,

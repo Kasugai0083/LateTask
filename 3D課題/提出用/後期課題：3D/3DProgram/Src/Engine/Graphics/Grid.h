@@ -29,18 +29,21 @@ struct LineDesc
 
 class LineDrawer {
 public:
-	LineDrawer(Vec3 start_, Vec3 end_)
+	LineDrawer()
 	{
-			
+		//m_LineManager.m_Start = start_;
+		//m_LineManager.m_End = end_;
+
 	}
 
 	void InitLine(Vec3 start, Vec3 end);
 
-	void UpdateLine();
-
 	void UpdateLineManager();
 
 	void DrawLine();
+
+private:
+	void UpdateLine();
 
 private:
 

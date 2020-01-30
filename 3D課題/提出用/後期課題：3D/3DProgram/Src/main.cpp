@@ -5,6 +5,7 @@
 #include "Engine/Window.h"
 #include "Engine/Graphics/Drawer2D.h"
 #include "Engine/Graphics/Slider.h"
+#include "Engine/Graphics/Grid.h"
 
 #include <string>
 #include <windows.h>
@@ -40,6 +41,13 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 	Slider slider1(-5.f, 5.f, 0.f,Direction::LeftToRight);
 	Slider slider2(-20.f, 2.5f, 0.f,Direction::RightToLeft);
+
+	// ‹Èü‚Ì•`‰æ
+	Vec3 test(0.f, 0.f, 0.f);
+	Vec3 test2(5.f, 5.f, 5.f);
+
+	LineDrawer Gridman;
+	Gridman.InitLine(test, test2);
 
 	while (Window::ProcessMessage())
 	{
@@ -80,6 +88,9 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 		slider1.DrawSlider("Res/Slider01.png");
 		slider2.DrawSlider("Res/Slider01.png");
+
+		Gridman.UpdateLineManager();
+		Gridman.DrawLine();
 
 		s_DXManager->EndDraw();
 		
