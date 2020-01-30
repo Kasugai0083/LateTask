@@ -5,6 +5,9 @@
 #include <d3dx9.h>
 #include <string>
 #include <map>
+#include <vector>
+
+class LineDesc;
 
 struct Texture{
 	LPDIRECT3DTEXTURE9 TexutreData;	//!< テクスチャデータ
@@ -28,6 +31,8 @@ public:
 	bool CreateTexture(std::string file_name_);
 
 	//void DrawSlider(Slider& slider_, std::string file_name_);
+
+	void DrawLine(std::vector<LineDesc> desc_list);
 
 	Texture* GetTexture(std::string file_name_) { return m_TextureList[file_name_]; }
 

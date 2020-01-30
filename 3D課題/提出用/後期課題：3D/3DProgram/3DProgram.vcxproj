@@ -81,6 +81,7 @@
   <ItemGroup>
     <ClCompile Include="Src\Engine\Graphics\Drawer2D.cpp" />
     <ClCompile Include="Src\Engine\Graphics\DirectX.cpp" />
+    <ClCompile Include="Src\Engine\Graphics\Grid.cpp" />
     <ClCompile Include="Src\Engine\Graphics\Slider.cpp" />
     <ClCompile Include="Src\Engine\Graphics\XFileDrawer.cpp" />
     <ClCompile Include="Src\Engine\Graphics\HandMade.cpp" />
@@ -91,6 +92,7 @@
   <ItemGroup>
     <ClInclude Include="Src\Engine\Graphics\Drawer2D.h" />
     <ClInclude Include="Src\Engine\Graphics\DirectX.h" />
+    <ClInclude Include="Src\Engine\Graphics\Grid.h" />
     <ClInclude Include="Src\Engine\Graphics\Slider.h" />
     <ClInclude Include="Src\Engine\Graphics\XFileDrawer.h" />
     <ClInclude Include="Src\Engine\Graphics\HandMade.h" />
@@ -98,6 +100,8 @@
     <ClInclude Include="Src\Utility\SingletonTemplate.h" />
     <ClInclude Include="Src\Engine\Graphics\XFile.h" />
     <ClInclude Include="Src\Utility\Size.h" />
+    <ClInclude Include="Src\Utility\Vec2.h" />
+    <ClInclude Include="Src\Utility\Vec3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

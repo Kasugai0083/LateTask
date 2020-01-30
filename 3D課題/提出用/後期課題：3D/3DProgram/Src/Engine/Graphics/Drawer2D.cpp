@@ -1,8 +1,10 @@
 #include "Drawer2D.h"
 #include "DirectX.h"
 #include "HandMade.h"
+#include "Grid.h"
+#include <vector>
 
-void Drawer2D::DrawSetting(float x_, float y_, float z_, std::string file_name_) {
+void Drawer2D::DrawSetting(float x_, float y_, float z_, std::string file_name_ = "JohnDo") {
 	// DirectX のインスタンス化
 	DXManager* Ins_DXManager = DXManager::GetInstance();
 	if (!Ins_DXManager) { return; }
@@ -34,7 +36,10 @@ void Drawer2D::DrawSetting(float x_, float y_, float z_, std::string file_name_)
 	Ins_DXManager->GetStatus()->m_D3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	Ins_DXManager->GetStatus()->m_D3DDevice->SetFVF(D3DFVF_XYZ | D3DFVF_TEX1);
-	Ins_DXManager->GetStatus()->m_D3DDevice->SetTexture(0, m_TextureList[file_name_]->TexutreData);
+	
+	if (file_name_ != "JohnDo") {
+		Ins_DXManager->GetStatus()->m_D3DDevice->SetTexture(0, m_TextureList[file_name_]->TexutreData);
+	}
 
 }
 
@@ -66,6 +71,49 @@ void Drawer2D::DrawTexture(CustomVertex v_, std::string file_name_, float tu, fl
 	};
 
 	Ins_DXManager->GetStatus()->m_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, v, sizeof(CustomVertex));
+}
+
+// 曲線の描画現在調整中
+void Drawer2D::DrawLine(std::vector<LineDesc> desc_list)
+{
+	// DirectX のインスタンス化
+	DXManager* Ins_DXManager = DXManager::GetInstance();
+	if (!Ins_DXManager) { return; }
+
+	DrawSetting(desc_list[0].m_Pos.X, desc_list[0].m_Pos.Y, desc_list[0].m_Pos.Z);
+
+	struct LineVertex
+	{
+		float x;
+		float y;
+		float z;
+
+		float w;
+
+		DWORD color;
+	};
+
+	std::vector<LineVertex> vertex_list;
+
+	for (int i = 0; i < desc_list.size(); i++)
+	{
+		float tu = 0.0f;
+		float tv = 0.0f;
+
+		DWORD color = D3DCOLOR_ARGB((int)(255 * desc_list[i].m_Alpha), 255, 255, 255);
+		LineVertex new_vertex =
+		{
+			desc_list[i].m_Pos.X,
+			desc_list[i].m_Pos.Y,
+			0.0f,
+			1.0f,
+			color
+		};
+
+		vertex_list.push_back(new_vertex);
+	}
+
+	Ins_DXManager->GetStatus()->m_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, vertex_list.size() - 2, &vertex_list[0], sizeof(LineVertex));
 }
 
 bool Drawer2D::CreateTexture(std::string file_name_)
