@@ -124,8 +124,8 @@ void Slider::DrawSlider(std::string file_name_)
 	Ins->GetStatus()->m_D3DDevice->SetTransform(D3DTS_WORLD, &world);
 
 #endif
-	CustomVertex a{ D3DXVECTOR3(pos_x, pos_y, pos_z), D3DXVECTOR2(tex_x,tex_y) };
+	VertexPos a{ Pos3(pos_x, pos_y, pos_z), Pos2(tex_x,tex_y),Pos2(tex_width, tex_height) };
 
-	InsDrawer.DrawTexture(a, file_name_, tex_width, tex_height);
+	InsDrawer.DrawTexture(a, file_name_);
 
 }

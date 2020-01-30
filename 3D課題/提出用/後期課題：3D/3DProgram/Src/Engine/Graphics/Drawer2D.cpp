@@ -43,12 +43,12 @@ void Drawer2D::DrawSetting(float x_, float y_, float z_, std::string file_name_ 
 
 }
 
-void Drawer2D::DrawTexture(CustomVertex v_, std::string file_name_, float tu, float tv)
+void Drawer2D::DrawTexture(VertexPos v_, std::string file_name_)
 {
 	DXManager* Ins_DXManager = DXManager::GetInstance();
 	if (!Ins_DXManager) { return; }
 
-	DrawSetting(v_.pos.x, v_.pos.y, v_.pos.z, file_name_);
+	DrawSetting(v_.pos.X, v_.pos.Y, v_.pos.Z, file_name_);
 
 	float left_tu = 0.f;
 	float right_tu = 1.f;
@@ -56,18 +56,18 @@ void Drawer2D::DrawTexture(CustomVertex v_, std::string file_name_, float tu, fl
 	float bottom_tv = 1.f;
 	
 	if (m_TextureList[file_name_] != nullptr) {
-		left_tu = v_.tex_pos.x / m_TextureList[file_name_]->Width;
-		right_tu =(v_.tex_pos.x + tu) / m_TextureList[file_name_]->Width;
-		top_tv = v_.tex_pos.y / m_TextureList[file_name_]->Height;
-		bottom_tv = (v_.tex_pos.y + tv) / m_TextureList[file_name_]->Height;
+		left_tu = v_.tex_pos_start.X / m_TextureList[file_name_]->Width;
+		right_tu =(v_.tex_pos_start.X + v_.tex_pos_end.X) / m_TextureList[file_name_]->Width;
+		top_tv = v_.tex_pos_start.Y / m_TextureList[file_name_]->Height;
+		bottom_tv = (v_.tex_pos_start.Y + v_.tex_pos_end.Y) / m_TextureList[file_name_]->Height;
 	}
 
 	CustomVertex v[] =
 	{
-		{ D3DXVECTOR3(v_.tex_pos.x, v_.tex_pos.y + tv, 0.0f), D3DXVECTOR2(left_tu, top_tv) },		// 左上
-		{ D3DXVECTOR3(v_.tex_pos.x + tu, v_.tex_pos.y + tv, 0.0f), D3DXVECTOR2(right_tu, top_tv) }, // 右上
-		{ D3DXVECTOR3(v_.tex_pos.x + tu, v_.tex_pos.y, 0.0f), D3DXVECTOR2(right_tu, bottom_tv) },	// 右下
-		{ D3DXVECTOR3(v_.tex_pos.x, v_.tex_pos.y, 0.0f), D3DXVECTOR2(left_tu, bottom_tv) },
+		{ D3DXVECTOR3(v_.tex_pos_start.X, v_.tex_pos_start.Y + v_.tex_pos_end.Y, 0.0f), D3DXVECTOR2(left_tu, top_tv) },		// 左上
+		{ D3DXVECTOR3(v_.tex_pos_start.X + v_.tex_pos_end.X, v_.tex_pos_start.Y + v_.tex_pos_end.Y, 0.0f), D3DXVECTOR2(right_tu, top_tv) }, // 右上
+		{ D3DXVECTOR3(v_.tex_pos_start.X + v_.tex_pos_end.X, v_.tex_pos_start.Y, 0.0f), D3DXVECTOR2(right_tu, bottom_tv) },	// 右下
+		{ D3DXVECTOR3(v_.tex_pos_start.X, v_.tex_pos_start.Y, 0.0f), D3DXVECTOR2(left_tu, bottom_tv) },
 	};
 
 	Ins_DXManager->GetStatus()->m_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, v, sizeof(CustomVertex));

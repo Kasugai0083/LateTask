@@ -1,22 +1,6 @@
 #include "Grid.h"
 #include "Drawer2D.h"
 
-void LineDrawer::InitLine(Vec3 start, Vec3 end) {
-	m_LineManager.m_Width = 10.0f;
-	m_LineManager.m_Line.clear();
-	m_LineManager.m_Start = start;
-	m_LineManager.m_End = end;
-	m_LineManager.m_Center = Vec3(5, 5, 5);
-	m_LineManager.m_Timer = 0;
-
-	Line line =
-	{
-		m_LineManager.m_Start,
-		120,
-	};
-	m_LineManager.m_Line.push_back(line);
-}
-
 void LineDrawer::UpdateLine() {
 	for (auto& line : m_LineManager.m_Line)
 	{
@@ -32,8 +16,22 @@ void LineDrawer::UpdateLineManager() {
 		Vec3 new_pos;
 		float percent = m_LineManager.m_Timer / 60.0f;
 
-		new_pos.X = (1 - percent) * (1 - percent) * m_LineManager.m_Start.X + 2 * (1 - percent) * percent * m_LineManager.m_Center.X + percent * percent * m_LineManager.m_End.X;
-		new_pos.Y = (1 - percent) * (1 - percent) * m_LineManager.m_Start.Y + 2 * (1 - percent) * percent * m_LineManager.m_Center.Y + percent * percent * m_LineManager.m_End.Y;
+		new_pos.X = 
+			(1 - percent) 
+			* (1 - percent) 
+			* m_LineManager.m_Start.X + 2 
+			* (1 - percent) 
+			* percent 
+			* m_LineManager.m_Center.X + percent 
+			* percent * m_LineManager.m_End.X;
+
+		new_pos.Y = (1 - percent) 
+			* (1 - percent) 
+			* m_LineManager.m_Start.Y + 2 
+			* (1 - percent) * percent 
+			* m_LineManager.m_Center.Y + percent 
+			* percent 
+			* m_LineManager.m_End.Y;
 
 		Line new_line =
 		{

@@ -46,8 +46,7 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 	Vec3 test(0.f, 0.f, 0.f);
 	Vec3 test2(5.f, 5.f, 5.f);
 
-	LineDrawer Gridman;
-	Gridman.InitLine(test, test2);
+	LineDrawer Gridman(test, test2);
 
 	while (Window::ProcessMessage())
 	{
@@ -79,8 +78,8 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 		// î¬É|ÉäÇÃï`âÊ(ç∂â∫)
 		{
-			CustomVertex v{ D3DXVECTOR3(-5.f,-5.f,0.f),D3DXVECTOR2(0.f,0.f) };
-			drawer.DrawTexture(v, "Res/bomb.png",256.f, 256.f);
+			VertexPos v{ Pos3(-5.f,-5.f,0.f),Pos2(0.f,0.f),Pos2(256.f, 256.f) };
+			drawer.DrawTexture(v, "Res/bomb.png");
 		}
 
 		slider1.Update();

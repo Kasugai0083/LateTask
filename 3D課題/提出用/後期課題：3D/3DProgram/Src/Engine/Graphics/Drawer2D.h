@@ -1,5 +1,7 @@
 #pragma once
 
+#include "..//..//Utility/Vec2.h"
+#include "..//..//Utility/Vec3.h"
 #include "..//..//Utility/Size.h"
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -22,11 +24,18 @@ struct CustomVertex {
 
 };
 
+struct VertexPos {
+
+	Pos3 pos;
+	Pos2 tex_pos_start, tex_pos_end;
+
+};
+
 class Drawer2D
 {
 public:
 
-	void DrawTexture(CustomVertex v_, std::string file_name_, float tu, float tv);
+	void DrawTexture(VertexPos v_, std::string file_name_);
 
 	bool CreateTexture(std::string file_name_);
 
