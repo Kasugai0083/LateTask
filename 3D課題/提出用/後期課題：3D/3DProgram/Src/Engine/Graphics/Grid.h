@@ -43,13 +43,13 @@ struct LineDesc
 
 class LineDrawer {
 public:
-	LineDrawer(Vec3 start, Vec3 end)
+	LineDrawer(Vec3 start, Vec3 center,Vec3 end)
 	{
 		m_LineManager.m_Width = 10.0f;
 		m_LineManager.m_Line.clear();
 		m_LineManager.m_Start = start;
 		m_LineManager.m_End = end;
-		m_LineManager.m_Center = Vec3(0.f, 0.f, 0.f);
+		m_LineManager.m_Center = center;
 		m_LineManager.m_Timer = 0;
 
 		Line line =
@@ -65,6 +65,7 @@ public:
 	void DrawLine();
 
 private:
+	// m_Counter ‚ğŒ¸Z‚·‚é
 	void UpdateLine();
 
 private:

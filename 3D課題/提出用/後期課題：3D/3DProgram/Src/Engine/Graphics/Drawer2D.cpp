@@ -105,7 +105,7 @@ void Drawer2D::DrawLine(std::vector<LineDesc> desc_list)
 		{
 			desc_list[i].m_Pos.X,
 			desc_list[i].m_Pos.Y,
-			0.0f,
+			desc_list[0].m_Pos.Z,
 			1.0f,
 			color
 		};
