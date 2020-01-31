@@ -74,7 +74,7 @@ void DXManager::Transform()
 	//test++;
 
 	float rad = test * 3.14f / 180.f;
-	float distance = 1.0f;
+	float distance = 10.0f;
 	D3DXVECTOR3 vec = D3DXVECTOR3(
 		sinf(rad) * distance,
 		0.0f,

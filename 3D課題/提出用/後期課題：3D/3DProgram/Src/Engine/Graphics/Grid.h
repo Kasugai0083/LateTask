@@ -14,11 +14,12 @@
 	④．③のベクトルを単位ベクトルにする
 	⑤．線の幅 / 2 を④のベクトルに掛ける
 	⑥．⑤のベクトルに座標を足した新しい座標を作る
+
 	⑦．⑤のベクトルを180度回転する
 	⑧．⑦のベクトルと座標を足した新しい座標を作る
+
 	⑨．②～⑧を繰り返してTriangleStripで描画するための頂点の塊を作る
 */
-
 struct Line
 {
 	Vec3 m_Pos;
@@ -45,7 +46,11 @@ class LineDrawer {
 public:
 	LineDrawer(Vec3 start, Vec3 center,Vec3 end)
 	{
-		m_LineManager.m_Width = 10.0f;
+		// 10.f でしか描画されない
+		// 訂正：Widthを上げるとどんどん高い位置で描画される
+		// 原因を探る
+		// ⑤で Width の値の半分を乗算しているため、位置ずれが起きていると思われる
+		m_LineManager.m_Width = 20.0f;
 		m_LineManager.m_Line.clear();
 		m_LineManager.m_Start = start;
 		m_LineManager.m_End = end;
