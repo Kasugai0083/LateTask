@@ -79,6 +79,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Scene\Result\ResultScene.cpp" />
+    <ClCompile Include="Src\Scene\GameMain\GameScene.cpp" />
     <ClCompile Include="Src\Engine\Graphics\Drawer2D.cpp" />
     <ClCompile Include="Src\Engine\Graphics\DirectX.cpp" />
     <ClCompile Include="Src\Engine\Graphics\Grid.cpp" />
@@ -88,8 +90,12 @@
     <ClCompile Include="Src\Engine\Window.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Engine\Graphics\XFile.cpp" />
+    <ClCompile Include="Src\Scene\SceneController.cpp" />
+    <ClCompile Include="Src\Scene\Title\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Scene\Result\ResultScene.h" />
+    <ClInclude Include="Src\Scene\GameMain\GameScene.h" />
     <ClInclude Include="Src\Engine\Graphics\Drawer2D.h" />
     <ClInclude Include="Src\Engine\Graphics\DirectX.h" />
     <ClInclude Include="Src\Engine\Graphics\Grid.h" />
@@ -97,11 +103,15 @@
     <ClInclude Include="Src\Engine\Graphics\XFileDrawer.h" />
     <ClInclude Include="Src\Engine\Graphics\HandMade.h" />
     <ClInclude Include="Src\Engine\Window.h" />
+    <ClInclude Include="Src\Scene\SceneBase.h" />
+    <ClInclude Include="Src\Scene\SceneController.h" />
+    <ClInclude Include="Src\Scene\SceneID.h" />
     <ClInclude Include="Src\Utility\SingletonTemplate.h" />
     <ClInclude Include="Src\Engine\Graphics\XFile.h" />
     <ClInclude Include="Src\Utility\Size.h" />
     <ClInclude Include="Src\Utility\Vec2.h" />
     <ClInclude Include="Src\Utility\Vec3.h" />
+    <ClInclude Include="Src\Scene\Title\TitleScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
