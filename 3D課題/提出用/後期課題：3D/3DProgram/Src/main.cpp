@@ -42,11 +42,7 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 	Slider slider1(-5.f, 5.f, 0.f,Direction::LeftToRight);
 	Slider slider2(-20.f, 2.5f, 0.f,Direction::RightToLeft);
 
-	// ‹Èü‚Ì•`‰æ
-	//Vec3 test1(0.f, -15.f, 0.f);
-	//Vec3 test2(5.f, 0.f, 0.f);
-	//Vec3 test3(10.f, 5.f, 0.f);
-
+	// ‹Èü‚Ì•`‰æ // ’l‚Ì•ÏX‚Å•`‰æ‚É‰e‹¿‚Í‚ ‚é‚à‚Ì‚ÌA‘z’è’Ê‚è‚É§Œä‚Å‚«‚¸
 	Vec3 test1(-5.f, -1.f, 0.f);
 	Vec3 test2(10.f, 2.f, 0.f);
 	Vec3 test3(20.f, -2.f, 0.f);

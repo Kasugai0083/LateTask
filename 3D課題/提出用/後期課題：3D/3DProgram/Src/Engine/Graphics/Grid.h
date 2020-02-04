@@ -20,22 +20,43 @@
 
 	⑨．②～⑧を繰り返してTriangleStripで描画するための頂点の塊を作る
 */
+
+/**
+* @brief 
+* 曲線の情報を管理
+*/
+
+/**
+* 線の座標と経過フレームを保存
+*/
 struct Line
 {
 	Vec3 m_Pos;
 	int m_Counter;
 };
 
+/**
+* @brief 線のステータスを管理
+* @param m_Width	線の幅
+* @param m_Start	線の開始点
+* @param m_End		線の終点？
+* @param m_Center	線の中間点？
+* @param m_Timer	経過フレームを保存
+* @param m_Line		位置情報とタイマー
+*/
 struct LineManager 
 {
-	float m_Width;		// 線の幅
-	Vec3 m_Start;		// 線の開始点
-	Vec3 m_End;			// ??
-	Vec3 m_Center;		// ??
-	int m_Timer;		// 更新
-	std::vector<Line>m_Line;	// 位置情報とタイマー
+	float m_Width;				
+	Vec3 m_Start;				
+	Vec3 m_End;					
+	Vec3 m_Center;				
+	int m_Timer;				
+	std::vector<Line>m_Line;	
 };
 
+/**
+* @brief 線の位置情報と色彩濃度を保存
+*/
 struct LineDesc 
 {
 	Vec3 m_Pos;
@@ -44,6 +65,13 @@ struct LineDesc
 
 class LineDrawer {
 public:
+
+	/**
+	* @brief コンストラクタ
+	* @param start	線の開始点
+	* @param center 線の中間点
+	* @param end	線の終点
+	*/
 	LineDrawer(Vec3 start, Vec3 center,Vec3 end)
 	{
 		// 10.f でしか描画されない
@@ -65,20 +93,22 @@ public:
 		m_LineManager.m_Line.push_back(line);
 	}
 
+	/**
+	* @brief ６フレーム毎に次の線情報を作成する
+	*/
 	void UpdateLineManager();
 
+	/**
+	* @brief 曲線の描画
+	*/
 	void DrawLine();
 
 private:
-	// m_Counter を減算する
-	void UpdateLine();
+	void UpdateLine(); 	//!< @brief m_Counter を減算する
 
 private:
+	LineManager m_LineManager;	//!< @brief 曲線の情報を管理
 
-	LineManager m_LineManager;
-
-	std::vector<Vec3> m_Lines;
-
-	Drawer2D drawer;
+	Drawer2D m_Drawer;			//!< @brief 描画関数を呼び出すために使用
 
 };

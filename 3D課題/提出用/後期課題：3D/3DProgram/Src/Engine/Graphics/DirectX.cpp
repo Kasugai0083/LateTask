@@ -66,12 +66,16 @@ bool DXManager::InitDirectX(HWND window_handle)
 
 void DXManager::Transform()
 {
+	//ビュー座標変換用の行列算出 start
 
+	D3DXVECTOR3 camera_pos(0.f, 0.f, -10.f); // カメラ位置
+	D3DXVECTOR3 eye_pos(0.0f, 0.0f, 0.0f);		// 注視点
+	D3DXVECTOR3 up_vector(0.0f, 1.0f, 0.0f);	// カメラの向き
+	
+	// カメラの移動
 	static float test = 1.f;
 
-	static const D3DXVECTOR3 TargetPos(0.f,0.f,0.f);
-
-	//test++;
+	test++;
 
 	float rad = test * 3.14f / 180.f;
 	float distance = 10.0f;
@@ -81,15 +85,9 @@ void DXManager::Transform()
 		-cosf(rad) * distance
 	);
 
-
-
-	//ビュー座標変換用の行列算出 start
-	D3DXVECTOR3 camera_pos(0.f, 0.f, -10.f); // カメラ位置
-	D3DXVECTOR3 eye_pos(0.0f, 0.0f, 0.0f);		// 注視点
-	D3DXVECTOR3 up_vector(0.0f, 1.0f, 0.0f);	// カメラの向き
-
 	camera_pos.z += vec.z;
 	camera_pos.x += vec.x;
+	//カメラの移動 end
 
 	D3DXMatrixIdentity(&m_MatView);
 	D3DXMatrixLookAtLH(&m_MatView, 

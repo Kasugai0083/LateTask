@@ -81,49 +81,9 @@ void Slider::DrawSlider(std::string file_name_)
 		tex_width *= rate;
 	}
 	else if (Dir == Direction::RightToLeft) {
-		//tex_width *= rate;
 		ReverseMove(rate, tex_width, pos_x, tex_x, tex_width);
 	}
 
-
-	//// Šeis•ûŒü‚É‚æ‚éˆ—‚ðŽÀ‘•‚·‚é
-	//if (slider.Dir == Direction::LeftToRight)
-	//{
-	//	// ‰¡•‚É”ä—¦‚ðŠ|‚¯‚ÄƒTƒCƒY‚ð’²®‚·‚é
-	//	tex_width *= rate;
-	//}
-	//else if (slider.Dir == Direction::RightToLeft)
-	//{
-	//	// Å¬ => Å‘å‚Ì•ûŒü‚ÆXŽ²‚ÌÅ¬ => Å‘å‚ª‹t‚È‚Ì‚Å”½“]‚³‚¹‚é
-	//	ReverseMove(rate, tex_width, pos_x, tex_x, tex_width);
-	//}
-	//else if (slider.Dir == Direction::UpToDown)
-	//{
-	//	// c•‚É”ä—¦‚ðŠ|‚¯‚ÄƒTƒCƒY‚ð’²®‚·‚é
-	//	tex_height *= rate;
-	//}
-	//else if (slider.Dir == Direction::DownToUp)
-	//{
-	//	// Å¬ => Å‘å‚Ì•ûŒü‚ÆYŽ²‚ÌÅ¬ => Å‘å‚ª‹t‚È‚Ì‚Å”½“]‚³‚¹‚é
-	//	ReverseMove(rate, tex_height, pos_y, tex_y, tex_height);
-	//}
-
-// ’†–{'sƒR[ƒh
-#if 0
-	D3DXMATRIX world, trans;
-
-	D3DXMatrixIdentity(&world);
-	D3DXMatrixIdentity(&trans);
-
-	D3DXMatrixTranslation(&trans, pos_x, pos_y, pos_z);
-
-	world = trans;
-
-	DXManager* Ins = DXManager::GetInstance();
-
-	Ins->GetStatus()->m_D3DDevice->SetTransform(D3DTS_WORLD, &world);
-
-#endif
 	VertexPos a{ Pos3(pos_x, pos_y, pos_z), Pos2(tex_x,tex_y),Pos2(tex_width, tex_height) };
 
 	InsDrawer.DrawTexture(a, file_name_);

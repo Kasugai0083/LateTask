@@ -118,7 +118,7 @@ void LineDrawer::DrawLine() {
 			new_pos.Y += m_LineManager.m_Line[i].m_Pos.Y;
 			new_pos.Z += m_LineManager.m_Line[i].m_Pos.Z;
 
-			// alpha はタイムキーパー？
+			// alpha 色の濃度
 			float alpha = (float)m_LineManager.m_Line[i].m_Counter / 120.0f;
 			LineDesc new_desc =
 			{
@@ -133,6 +133,6 @@ void LineDrawer::DrawLine() {
 		}
 	}
 
-	drawer.DrawLine(desc_list);
+	m_Drawer.DrawLine(desc_list);
 
 }

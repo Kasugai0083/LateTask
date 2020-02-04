@@ -8,12 +8,12 @@ void XFileDrawer::Trans(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_
 	D3DXMatrixIdentity(&rot_matrix);
 	D3DXMatrixIdentity(&view_matrix);
 
-	HandMadeTranslation(&trans_matrix, pos_.x, pos_.y, pos_.z);
-	HandMadeScaling(&scale_matrix, scale_.x, scale_.y, scale_.z);
+	HandMade::Translation(&trans_matrix, pos_.x, pos_.y, pos_.z);
+	HandMade::Scaling(&scale_matrix, scale_.x, scale_.y, scale_.z);
 
-	HandMadeRotationX(&rot_matrix_x, D3DXToRadian(angle_.x));
-	HandMadeRotationY(&rot_matrix_y, D3DXToRadian(angle_.y));
-	HandMadeRotationZ(&rot_matrix_z, D3DXToRadian(angle_.z));
+	HandMade::RotationX(&rot_matrix_x, D3DXToRadian(angle_.x));
+	HandMade::RotationY(&rot_matrix_y, D3DXToRadian(angle_.y));
+	HandMade::RotationZ(&rot_matrix_z, D3DXToRadian(angle_.z));
 
 	rot_matrix *= rot_matrix_x * rot_matrix_y * rot_matrix_z;
 
@@ -44,7 +44,7 @@ void XFileDrawer::DrawBillbord(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3
 
 	Trans(pos_, scale_, angle_);
 
-	HandMadeBillBoard(&view_matrix, Ins_DXManager->GetViewMatrix());
+	HandMade::BillBoard(&view_matrix, Ins_DXManager->GetViewMatrix());
 
 	world_matrix *= scale_matrix * trans_matrix * rot_matrix * view_matrix;
 
