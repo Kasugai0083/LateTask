@@ -1,10 +1,6 @@
 #include "GameScene.h"
 
 
-
-GameScene::GameScene()
-{
-}
 GameScene::~GameScene()
 {
 }
@@ -12,13 +8,16 @@ GameScene::~GameScene()
 
 void GameScene::Init()
 {
+	// ƒV[ƒ“‘JˆÚ
 	m_State = SceneState::UPDATE;
 }
 
 void GameScene::Update() {
+	Gridman.UpdateLineManager();
+
 	static int count = 0;
 	count++;
-	if (count >= 20) {
+	if (count >= 120) {
 		count = 0;
 		m_State = SceneState::END;
 	}
@@ -45,6 +44,7 @@ SceneID GameScene::Control() {
 }
 
 void GameScene::Draw() {
+	Gridman.DrawLine();
 
 }
 

@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../SceneBase.h"
+#include "../../Engine/Graphics/XFileDrawer.h"
+
 
 class TitleScene :public SceneBase
 {
@@ -14,5 +16,7 @@ private:
 	SceneID End()override;
 	SceneID Control();
 	void Draw()override;
+private:
+	XFileDrawer Object;
 };
 

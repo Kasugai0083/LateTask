@@ -1,11 +1,18 @@
 #pragma once
 
 #include "../SceneBase.h"
+#include "../SceneController.h"
+#include "../../Engine/Graphics/Drawer2D.h"
+#include "../../Engine/Graphics/Slider.h"
 
 class ResultScene :public SceneBase
 {
 public:
-	ResultScene();
+	ResultScene() : 
+		slider1(-5.f, 5.f, 0.f, Direction::LeftToRight),
+		slider2(-20.f, 2.5f, 0.f, Direction::RightToLeft)
+	{
+	}
 	~ResultScene()override;
 private:
 	void Init()override;
@@ -13,5 +20,11 @@ private:
 	SceneID End()override;
 	SceneID Control()override;
 	void Draw()override;
+private:
+	Drawer2D drawer;
+
+	Slider slider1;
+	Slider slider2;
+
 };
 

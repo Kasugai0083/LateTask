@@ -33,28 +33,6 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 		MessageBox(NULL,"ƒEƒBƒ“ƒhƒEì¬Ž¸”s",NULL, MB_OK);
 	}
 
-	XFileDrawer Object;
-
-	if(!Object.Load("Res/Sample01.x")){
-		MessageBox(NULL, "‰æ‘œ‚Ì“Ç‚Ýž‚Ý‚ÉŽ¸”s1", NULL, MB_OK);
-	}
-
-	Drawer2D drawer;
-
-	if (!drawer.CreateTexture("Res/bomb.png")) {
-		MessageBox(NULL, "‰æ‘œ‚Ì“Ç‚Ýž‚Ý‚ÉŽ¸”s2", NULL, MB_OK);
-	}
-
-	Slider slider1(-5.f, 5.f, 0.f,Direction::LeftToRight);
-	Slider slider2(-20.f, 2.5f, 0.f,Direction::RightToLeft);
-
-	// ‹Èü‚Ì•`‰æ // ’l‚Ì•ÏX‚Å•`‰æ‚É‰e‹¿‚Í‚ ‚é‚à‚Ì‚ÌA‘z’è’Ê‚è‚É§Œä‚Å‚«‚¸
-	Vec3 test1(-5.f, -1.f, 0.f);
-	Vec3 test2(10.f, 2.f, 0.f);
-	Vec3 test3(20.f, -2.f, 0.f);
-
-	LineDrawer Gridman(test1, test2, test3);
-
 	while (Window::ProcessMessage())
 	{
 
@@ -64,48 +42,15 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 		s_DXManager->SetLighting();
 
-
+		// ƒV[ƒ“§Œä
 		s_Controller->Update();
 		s_Controller->Draw();
-
-		// XFile‚Ì•`‰æ(³–Ê)
-		Object.Draw(
-			D3DXVECTOR3(0.f, 0.f, 0.f),
-			D3DXVECTOR3(1.f, 1.f, 1.f),
-			D3DXVECTOR3(20.f, 20.f, 20.f),
-			"Res/Sample01.x"
-		);
-
-
-		// XFile‚Ì•`‰æ(‰Eã)
-		Object.DrawBillbord(
-			D3DXVECTOR3(5.f, 5.f, 5.f),
-			D3DXVECTOR3(1.f, 1.f, 1.f),
-			D3DXVECTOR3(20.f, 20.f, 20.f),
-			"Res/Sample01.x"
-		);
-
-
-		// ”Âƒ|ƒŠ‚Ì•`‰æ(¶‰º)
-		{
-			VertexPos v{ Pos3(-5.f,-5.f,0.f),Pos2(0.f,0.f),Pos2(256.f, 256.f) };
-			drawer.DrawTexture(v, "Res/bomb.png");
-		}
-
-		slider1.Update();
-		slider2.Update();
-
-		slider1.DrawSlider("Res/Slider01.png");
-		slider2.DrawSlider("Res/Slider01.png");
-
-		Gridman.UpdateLineManager();
-		Gridman.DrawLine();
 
 		s_DXManager->EndDraw();
 		
 	}
 
-	Object.ReleaseXFile();
+
 	s_Controller->Release();
 
 	SceneController::DestroyInstance();
