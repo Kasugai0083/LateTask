@@ -1,6 +1,7 @@
 #pragma once
 
 #include "..//Engine/Device.h"
+#include "../Engine/Graphics/Drawer2D.h"
 #include "SceneID.h"
 
 /**

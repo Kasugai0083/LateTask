@@ -49,6 +49,9 @@ SceneID TitleScene::Control() {
 }
 
 void TitleScene::Draw() {
+	Vec2 font_pos(0.f, 0.f);
+	drawer.DrawFont(font_pos, "XFile‚ğ•\¦");
+
 	// XFile‚Ì•`‰æ(³–Ê)
 	Object.Draw(
 		D3DXVECTOR3(0.f, 0.f, 0.f),
