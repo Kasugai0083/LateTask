@@ -27,11 +27,11 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 	SceneController::CreateInstance();
 	SceneController* s_Controller = SceneController::GetInstance();
 
-	s_Controller->Init(SceneID::TITLE);
 
 	if (!Window::MakeWindow(600.f,600.f,"後期課題：エンジンテスト")) {
 		MessageBox(NULL,"ウィンドウ作成失敗",NULL, MB_OK);
 	}
+	s_Controller->Init(SceneID::TITLE);
 
 	while (Window::ProcessMessage())
 	{

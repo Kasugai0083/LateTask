@@ -6,9 +6,6 @@ ResultScene::~ResultScene()
 }
 
 void ResultScene::Init() {
-	if (!drawer.CreateTexture("Res/bomb.png")) {
-		MessageBox(NULL, "‰æ‘œ‚Ì“Ç‚İ‚İ‚É¸”s2", NULL, MB_OK);
-	}
 
 	m_State = SceneState::UPDATE;
 }
@@ -48,12 +45,13 @@ SceneID ResultScene::Control() {
 }
 
 void ResultScene::Draw() {
-	slider1.DrawSlider("Res/Slider01.png");
-	slider2.DrawSlider("Res/Slider01.png");
-	// ”Âƒ|ƒŠ‚Ì•`‰æ(¶‰º)
 	{
 		VertexPos v{ Pos3(-5.f,-5.f,0.f),Pos2(0.f,0.f),Pos2(256.f, 256.f) };
+		// ‚±‚±‚ÅƒoƒO‚ª”­¶’†
 		drawer.DrawTexture(v, "Res/bomb.png");
 	}
+
+	slider1.DrawSlider("Res/Slider01.png");
+	slider2.DrawSlider("Res/Slider01.png");
 
 }

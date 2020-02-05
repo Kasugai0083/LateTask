@@ -64,7 +64,9 @@ void ReverseMove(float rate, float size, float& out_pos, float& out_tex_pos, flo
 void Slider::DrawSlider(std::string file_name_)
 {
 
-	InsDrawer.CreateTexture(file_name_);
+	if (!InsDrawer.CreateTexture(file_name_)) {
+		MessageBox(NULL, "‰æ‘œ‚Ì“Ç‚İ‚İ‚É¸”s2", NULL, MB_OK);
+	}
 
 	float pos_x = X;
 	float pos_y = Y;

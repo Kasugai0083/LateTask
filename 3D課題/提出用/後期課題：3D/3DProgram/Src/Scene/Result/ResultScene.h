@@ -12,6 +12,10 @@ public:
 		slider1(-5.f, 5.f, 0.f, Direction::LeftToRight),
 		slider2(-20.f, 2.5f, 0.f, Direction::RightToLeft)
 	{
+		if (!drawer.CreateTexture("Res/bomb.png")) {
+			MessageBox(NULL, "‰æ‘œ‚Ì“Ç‚İ‚İ‚É¸”s2", NULL, MB_OK);
+		}
+
 	}
 	~ResultScene()override;
 private:
