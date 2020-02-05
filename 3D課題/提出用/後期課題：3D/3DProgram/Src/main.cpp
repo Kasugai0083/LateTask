@@ -6,7 +6,7 @@
 #include "Engine/Graphics/Drawer2D.h"
 #include "Engine/Graphics/Slider.h"
 #include "Engine/Graphics/Grid.h"
-
+#include "Scene/SceneController.h"
 #include <string>
 #include <windows.h>
 #include <d3d9.h>
@@ -22,6 +22,12 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 	//DirectXシングルトン作成
 	DXManager::CreateInstance();
 	DXManager* s_DXManager = DXManager::GetInstance();
+
+	// SceneController
+	SceneController::CreateInstance();
+	SceneController* s_Controller = SceneController::GetInstance();
+
+	s_Controller->Init(SceneID::TITLE);
 
 	if (!Window::MakeWindow(600.f,600.f,"後期課題：エンジンテスト")) {
 		MessageBox(NULL,"ウィンドウ作成失敗",NULL, MB_OK);
@@ -58,6 +64,9 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 		s_DXManager->SetLighting();
 
+
+		s_Controller->Update();
+		s_Controller->Draw();
 
 		// XFileの描画(正面)
 		Object.Draw(
@@ -97,7 +106,9 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 	}
 
 	Object.ReleaseXFile();
+	s_Controller->Release();
 
+	SceneController::DestroyInstance();
 	DXManager::DestroyInstance();
 
 }
