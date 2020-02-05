@@ -2,6 +2,7 @@
 #define DIRECTX_H_
 
 #include "../../Utility/SingletonTemplate.h"
+#include "..//..//Utility/Size.h"
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <map>
@@ -59,6 +60,13 @@ public:
 	void SetLighting();
 
 	/**
+	* @brief フォントのデバイスを作成
+	* @param フォントの大きさを指定
+	* @return デバイス作成に成功 => true
+	*/
+	bool CreateFontDevice(Size size_);
+
+	/**
 	* @return DirectX 構造体のアドレスを返す
 	*/
 	DXStatus* GetStatus() {
@@ -74,11 +82,20 @@ public:
 		return &m_MatView;
 	}
 
+	/**
+	* @return m_Font のアドレスを返す
+	*/
+	LPD3DXFONT& GetFont() {
+		return m_Font;
+	}
+
 protected:
 
 	DXStatus m_DXStatus; //!< @brief DirectX の周辺情報を保管
 
-	D3DXMATRIX m_MatProj, m_MatView; //!> @brief 視点情報行列
+	D3DXMATRIX m_MatProj, m_MatView; //!< @brief 視点情報行列
+
+	LPD3DXFONT m_Font; //!< フォントの情報
 
 private:
 	friend Singleton<DXManager>;

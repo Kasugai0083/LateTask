@@ -23,6 +23,7 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 	DXManager::CreateInstance();
 	DXManager* s_DXManager = DXManager::GetInstance();
 
+
 	// SceneController
 	SceneController::CreateInstance();
 	SceneController* s_Controller = SceneController::GetInstance();
@@ -32,6 +33,8 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 		MessageBox(NULL,"ウィンドウ作成失敗",NULL, MB_OK);
 	}
 	s_Controller->Init(SceneID::TITLE);
+
+
 
 	while (Device::ProcessMessage())
 	{
@@ -43,6 +46,9 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 		s_DXManager->Transform();
 
 		s_DXManager->SetLighting();
+
+		Size font_size{ 32.f,32.f };
+		s_DXManager->CreateFontDevice(font_size);
 
 		// シーン制御
 		s_Controller->Update();

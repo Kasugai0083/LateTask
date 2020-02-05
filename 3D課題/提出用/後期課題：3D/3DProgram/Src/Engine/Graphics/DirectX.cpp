@@ -152,3 +152,23 @@ void DXManager::SetLighting() {
 	m_DXStatus.m_D3DDevice->LightEnable(0, true);
 	m_DXStatus.m_D3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 }
+
+bool DXManager::CreateFontDevice(Size size_) {
+
+	if (FAILED(D3DXCreateFont(m_DXStatus.m_D3DDevice,
+		size_.Width,
+		size_.Height,
+		FW_REGULAR,
+		NULL,
+		FALSE,
+		DEFAULT_CHARSET,
+		OUT_DEFAULT_PRECIS,
+		PROOF_QUALITY,
+		FIXED_PITCH | FF_SCRIPT,
+		TEXT("ÇlÇrÅ@ÇoÉSÉVÉbÉN"),
+		&m_Font)))
+	{
+		return false;
+	}
+	return true;
+}

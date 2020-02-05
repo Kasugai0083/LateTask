@@ -4,7 +4,7 @@
 #include "Grid.h"
 #include <vector>
 
-void Drawer2D::DrawSetting(float x_, float y_, float z_, std::string file_name_ = "JohnDo") {
+void Drawer2D::DrawSetting(float x_, float y_, float z_) {
 	// DirectX のインスタンス化
 	DXManager* Ins_DXManager = DXManager::GetInstance();
 	if (!Ins_DXManager) { return; }
@@ -38,9 +38,6 @@ void Drawer2D::DrawSetting(float x_, float y_, float z_, std::string file_name_ 
 
 	Ins_DXManager->GetStatus()->m_D3DDevice->SetFVF(D3DFVF_XYZ | D3DFVF_TEX1);
 	
-	if (m_TextureList[file_name_]) {
-		Ins_DXManager->GetStatus()->m_D3DDevice->SetTexture(0, m_TextureList[file_name_]->TexutreData);
-	}
 
 }
 
@@ -49,7 +46,7 @@ void Drawer2D::DrawTexture(VertexPos v_, std::string file_name_)
 	DXManager* Ins_DXManager = DXManager::GetInstance();
 	if (!Ins_DXManager) { return; }
 
-	DrawSetting(v_.pos.X, v_.pos.Y, v_.pos.Z, file_name_);
+	DrawSetting(v_.pos.X, v_.pos.Y, v_.pos.Z);
 
 	float left_tu = 0.f;
 	float right_tu = 1.f;
@@ -70,6 +67,10 @@ void Drawer2D::DrawTexture(VertexPos v_, std::string file_name_)
 		{ D3DXVECTOR3(v_.tex_pos_start.X + v_.tex_pos_end.X, v_.tex_pos_start.Y, 0.0f), D3DXVECTOR2(right_tu, bottom_tv) },					// 右下
 		{ D3DXVECTOR3(v_.tex_pos_start.X, v_.tex_pos_start.Y, 0.0f), D3DXVECTOR2(left_tu, bottom_tv) },										// 左下
 	};
+
+	if (m_TextureList[file_name_]) {
+		Ins_DXManager->GetStatus()->m_D3DDevice->SetTexture(0, m_TextureList[file_name_]->TexutreData);
+	}
 
 	Ins_DXManager->GetStatus()->m_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, v, sizeof(CustomVertex));
 }
@@ -165,4 +166,29 @@ bool Drawer2D::CreateTexture(std::string file_name_)
 	}
 
 	return true;
+}
+
+void Drawer2D::DrawFont(Vec2 pos_,std::string text_) {
+
+	DXManager* Ins_DXManager = DXManager::GetInstance();
+	if (Ins_DXManager == nullptr) { return; }
+
+	RECT rect =
+	{
+		pos_.X,
+		pos_.Y,
+		pos_.X + 1024.f,
+		pos_.Y + 1024.f
+	};
+
+	LPD3DXFONT font = Ins_DXManager->GetFont();
+
+	font->DrawTextA(
+		NULL,
+		text_.c_str(),
+		-1,
+		&rect,
+		DT_LEFT,
+		D3DCOLOR_XRGB(255,255,255)
+	);
 }

@@ -16,7 +16,7 @@ void GameScene::Update() {
 	Gridman.UpdateLineManager();
 
 	static int count = 0;
-	if (Device::KeyPress('A')) {
+	if (Device::HasClickOnMouse()) {
 		m_State = SceneState::END;
 	}
 }

@@ -3,6 +3,9 @@
 
 namespace {
 
+	/**
+	* マウス関連
+	*/
 	struct t_Point {
 		POINT start = { 0,0 };//クリック時以外の座標を取得
 		POINT end = { 0,0 };  //クリック時の座標を取得
@@ -11,6 +14,10 @@ namespace {
 	bool is_drag = false; //ドラッグ判定変数
 	bool is_click = false;//ダブルクリック判定変数
 
+
+	/**
+	* キーボード関連
+	*/
 	const int INPUT_FRAME = 2;
 	const int KEYNUM = 256;
 
@@ -42,8 +49,6 @@ LRESULT CALLBACK WindowProc(HWND window_handle, UINT message_id, WPARAM wparam, 
 
 	// マウスボタンクリック開始時
 	case WM_LBUTTONDOWN:  // 左
-
-		MessageBox(NULL, "左クリック", NULL, MB_OK);
 
 		if (++timer >= 1.f) {
 			is_click = true;
@@ -182,5 +187,20 @@ namespace Device{
 		return !KeyTest(key[KB_CUR][nVirtKey]) && KeyTest(key[1][nVirtKey]);
 	}
 
+	Vec2 GetMousePoint() {
+
+		Vec2 vec(((float)pt.end.x),((float)pt.end.y));
+		return vec;
+	}
+
+	Vec2 GetPointOnDrag() {
+		Vec2 vec(((float)pt.start.x), ((float)pt.start.y));
+		return vec;
+	}
+	
+	const bool HasClickOnMouse() {
+		if (is_click) {	return true;}
+		return false;
+	}
 }
 

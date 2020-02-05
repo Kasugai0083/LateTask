@@ -74,11 +74,24 @@ public:
 	*/
 	void DrawLine(std::vector<LineDesc> desc_list);
 
+	/**
+	* @brief テクスチャ情報を取得
+	* @return テクスチャ情報のポインタを返す
+	*/
 	Texture* GetTexture(std::string file_name_) { return m_TextureList[file_name_]; }
+
+
+	/**
+	* @brief DrawTextA でテキストを表示\n
+	* DrawTextA の都合上、Z軸は設定できない
+	* @param pos_ テキストの座標
+	* @param text_ テキストの内容
+	*/
+	void DrawFont(Vec2 pos_, std::string text_);
 
 private:
 
-	void DrawSetting(float x_, float y_, float z_, std::string file_name_); //!< @brief DirectXのデバイス や 行列情報の初期化
+	void DrawSetting(float x_, float y_, float z_); //!< @brief DirectXのデバイス や 行列情報の初期化
 
 private:
 
