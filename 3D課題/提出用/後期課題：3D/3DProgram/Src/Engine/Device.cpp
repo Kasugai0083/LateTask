@@ -1,4 +1,4 @@
-#include "Window.h"
+#include "Device.h"
 #include "Graphics/DirectX.h"
 
 namespace {
@@ -10,6 +10,15 @@ namespace {
 
 	bool is_drag = false; //ドラッグ判定変数
 	bool is_click = false;//ダブルクリック判定変数
+
+	const int INPUT_FRAME = 2;
+	const int KEYNUM = 256;
+
+	enum FLAME {
+
+		KB_CUR = 0,
+		KB_PRE,
+	};
 };
 
 LRESULT CALLBACK WindowProc(HWND window_handle, UINT message_id, WPARAM wparam, LPARAM lparam)
@@ -75,16 +84,12 @@ LRESULT CALLBACK WindowProc(HWND window_handle, UINT message_id, WPARAM wparam, 
 		MessageBox(NULL, "システムキー入力", NULL, MB_OK);
 		return 0;
 
-	case WM_KEYDOWN: // キー押下開始時
-	case WM_KEYUP:   // キー終了時
-		MessageBox(NULL, "キー入力", NULL, MB_OK);
-		return 0;
 	}
 
 	return DefWindowProc(window_handle, message_id, wparam, lparam);
 }
 
-namespace Window{
+namespace Device{
 
 	bool MakeWindow(float x_, float y_, char* name_) {
 
@@ -156,6 +161,25 @@ namespace Window{
 			}
 		}
 		return true;
+	}
+
+	BYTE key[INPUT_FRAME][KEYNUM];
+
+	bool KeyTest(const BYTE k) {
+		return ((k & 0x80) != 0);
+	}
+	void KeyUpdate() {
+		memcpy(key[KB_PRE], key[KB_CUR], sizeof(*key));
+		GetKeyboardState(key[KB_CUR]);
+	}
+	bool KeyOn(int nVirtKey) {
+		return KeyTest(key[KB_CUR][nVirtKey]);
+	}
+	bool KeyPress(int nVirtKey) {
+		return KeyTest(key[KB_CUR][nVirtKey]) && !KeyTest(key[1][nVirtKey]);
+	}
+	bool KeyOff(int nVirtKey) {
+		return !KeyTest(key[KB_CUR][nVirtKey]) && KeyTest(key[1][nVirtKey]);
 	}
 
 }

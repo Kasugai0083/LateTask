@@ -101,6 +101,8 @@ void Drawer2D::DrawLine(std::vector<LineDesc> desc_list)
 		float tu = 0.0f;
 		float tv = 0.0f;
 
+		// ‚±‚±‚Ì Color ‚Ì’l‚ª‚¨‚©‚µ‚¢
+		// m_Alpha ‚Í‘z’è’l
 		DWORD color = D3DCOLOR_ARGB((int)(255 * desc_list[i].m_Alpha), 255, 255, 255);
 		LineVertex new_vertex =
 		{

@@ -2,7 +2,7 @@
 #include "Engine/Graphics/DirectX.h"
 #include "Engine/Graphics/XFile.h"
 #include "Engine/Graphics/XFileDrawer.h"
-#include "Engine/Window.h"
+#include "Engine/Device.h"
 #include "Engine/Graphics/Drawer2D.h"
 #include "Engine/Graphics/Slider.h"
 #include "Engine/Graphics/Grid.h"
@@ -28,13 +28,15 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 	SceneController* s_Controller = SceneController::GetInstance();
 
 
-	if (!Window::MakeWindow(600.f,600.f,"後期課題：エンジンテスト")) {
+	if (!Device::MakeWindow(600.f,600.f,"後期課題：エンジンテスト")) {
 		MessageBox(NULL,"ウィンドウ作成失敗",NULL, MB_OK);
 	}
 	s_Controller->Init(SceneID::TITLE);
 
-	while (Window::ProcessMessage())
+	while (Device::ProcessMessage())
 	{
+
+		Device::KeyUpdate();
 
 		s_DXManager->StartDraw();
 

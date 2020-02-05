@@ -1,6 +1,5 @@
 #include "TitleScene.h"
 
-
 TitleScene::TitleScene()
 {
 }
@@ -20,10 +19,7 @@ void TitleScene::Init() {
 }
 
 void TitleScene::Update() {
-	static int count = 0;
-	count++;
-	if (count >= 120) {
-		count = 0;
+	if (Device::KeyPress('A')) {
 		m_State = SceneState::END;
 	}
 }

@@ -87,7 +87,7 @@
     <ClCompile Include="Src\Engine\Graphics\Slider.cpp" />
     <ClCompile Include="Src\Engine\Graphics\XFileDrawer.cpp" />
     <ClCompile Include="Src\Engine\Graphics\HandMade.cpp" />
-    <ClCompile Include="Src\Engine\Window.cpp" />
+    <ClCompile Include="Src\Engine\Device.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Engine\Graphics\XFile.cpp" />
     <ClCompile Include="Src\Scene\SceneController.cpp" />
@@ -102,7 +102,7 @@
     <ClInclude Include="Src\Engine\Graphics\Slider.h" />
     <ClInclude Include="Src\Engine\Graphics\XFileDrawer.h" />
     <ClInclude Include="Src\Engine\Graphics\HandMade.h" />
-    <ClInclude Include="Src\Engine\Window.h" />
+    <ClInclude Include="Src\Engine\Device.h" />
     <ClInclude Include="Src\Scene\SceneBase.h" />
     <ClInclude Include="Src\Scene\SceneController.h" />
     <ClInclude Include="Src\Scene\SceneID.h" />

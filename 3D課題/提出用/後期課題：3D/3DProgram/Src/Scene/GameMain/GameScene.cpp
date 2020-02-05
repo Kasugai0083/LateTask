@@ -16,9 +16,7 @@ void GameScene::Update() {
 	Gridman.UpdateLineManager();
 
 	static int count = 0;
-	count++;
-	if (count >= 120) {
-		count = 0;
+	if (Device::KeyPress('A')) {
 		m_State = SceneState::END;
 	}
 }
