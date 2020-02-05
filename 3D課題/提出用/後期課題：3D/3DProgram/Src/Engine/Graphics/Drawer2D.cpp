@@ -38,7 +38,7 @@ void Drawer2D::DrawSetting(float x_, float y_, float z_, std::string file_name_ 
 
 	Ins_DXManager->GetStatus()->m_D3DDevice->SetFVF(D3DFVF_XYZ | D3DFVF_TEX1);
 	
-	if (file_name_ != "JohnDo") {
+	if (m_TextureList[file_name_]) {
 		Ins_DXManager->GetStatus()->m_D3DDevice->SetTexture(0, m_TextureList[file_name_]->TexutreData);
 	}
 

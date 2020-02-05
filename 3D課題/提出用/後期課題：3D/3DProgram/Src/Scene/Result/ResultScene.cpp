@@ -6,7 +6,9 @@ ResultScene::~ResultScene()
 }
 
 void ResultScene::Init() {
-
+	if (!drawer.CreateTexture("Res/bomb.png")) {
+		MessageBox(NULL, "‰æ‘œ‚Ì“Ç‚İ‚İ‚É¸”s2", NULL, MB_OK);
+	}
 	m_State = SceneState::UPDATE;
 }
 
